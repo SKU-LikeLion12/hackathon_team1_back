@@ -13,7 +13,7 @@ public class MemberController {
 
     @PostMapping("/member/add")
     public String signUp(@RequestBody MemberCreateRequest request) {
-        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName());
+        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getPhone());
         if(member == null) return null;
         return memberService.login(request.getUserId(), request.getPassword());
     }

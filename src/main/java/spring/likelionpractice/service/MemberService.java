@@ -29,10 +29,10 @@ public class MemberService {
     }
 
     @Transactional
-    public Member signUp(String userId, String password, String nickname) {
+    public Member signUp(String userId, String password, String name, String phone) {
         Member member = memberRepository.findByUserId(userId);
         if(member != null) return null;
-        return memberRepository.save(new Member(userId, password, nickname));
+        return memberRepository.save(new Member(userId, password, name, phone));
     }
 
     public Member findById(Long id) {

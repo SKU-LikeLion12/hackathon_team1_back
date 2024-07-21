@@ -14,6 +14,7 @@ public class MemberDTO {
         private String name;
         private String userId;
         private String password;
+        private String phone;
     }
 
     @Data

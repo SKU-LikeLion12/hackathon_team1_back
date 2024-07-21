@@ -1,9 +1,6 @@
 package spring.likelionpractice.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,18 +11,23 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter
 @Entity
 public class Member {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
     private String userId;
     private String password;
+    private String phone;
     @Setter
     private String name;
 
-    public Member(String userId, String password, String name) {
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Info info;
+
+    public Member(String userId, String password, String name, String phone) {
         this.userId = userId;
         this.setPassword(password);
         this.name = name;
+        this.phone = phone;
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -37,4 +39,5 @@ public class Member {
     public boolean checkPassword(String password) {
         return passwordEncoder.matches(password, this.password);
     }
+
 }
