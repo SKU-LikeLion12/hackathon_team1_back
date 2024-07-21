@@ -20,12 +20,12 @@ public class Member {
     private String userId;
     private String password;
     @Setter
-    private String nickname;
+    private String name;
 
-    public Member(String userId, String password, String nickname) {
+    public Member(String userId, String password, String name) {
         this.userId = userId;
         this.setPassword(password);
-        this.nickname = nickname;
+        this.name = name;
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

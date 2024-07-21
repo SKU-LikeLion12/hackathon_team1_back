@@ -23,7 +23,7 @@ public class ArticleDTO {
         public ResponseArticle(Article article) {
             this.title = article.getTitle();
             this.content = article.getContent();
-            this.writer = article.getWriter().getNickname();
+            this.writer = article.getWriter().getName();
             this.createDate = article.getCreateDate();
             this.likeCount = article.getLikeCount();
 

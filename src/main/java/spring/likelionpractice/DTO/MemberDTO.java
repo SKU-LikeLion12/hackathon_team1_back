@@ -11,7 +11,7 @@ public class MemberDTO {
 
     @Data
     public static class MemberCreateRequest {
-        private String nickname;
+        private String name;
         private String userId;
         private String password;
     }
@@ -26,13 +26,13 @@ public class MemberDTO {
     @Data
     public static class MemberResponse {        // 내부 클래스를 static으로 선언하여 외부 클래스 new 키워드 없이 생성 가능
         private String userId;
-        private String nickname;
+        private String name;
     }
 
     @Data
     public static class MemberUpdateRequest {
         private String token;
-        private String nickname;
+        private String name;
     }
 
     @Data

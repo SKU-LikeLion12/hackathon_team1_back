@@ -21,10 +21,10 @@ public class MemberService {
     }
 
     @Transactional
-    public Member changeName(String token, String nickname) {
+    public Member changeName(String token, String name) {
         Member member = tokentoMember(token);
         if (member == null) return null;
-        member.setNickname(nickname);
+        member.setName(name);
         return member;
     }
 

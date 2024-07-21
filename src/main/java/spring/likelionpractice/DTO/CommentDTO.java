@@ -38,7 +38,7 @@ public class CommentDTO {
             content = comment.getContent();
             createDate = comment.getCreatedDate();
             isUpdate = !comment.getCreatedDate().equals(comment.getUpdatedDate());
-            writer = comment.getWriter().getNickname();
+            writer = comment.getWriter().getName();
             writer_id = comment.getWriter().getUserId();
         }
     }

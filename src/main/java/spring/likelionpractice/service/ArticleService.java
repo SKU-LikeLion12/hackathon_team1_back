@@ -47,8 +47,6 @@ public class ArticleService {
 
     @Transactional
     public Article findArticle(Long articleId) {
-//        Article article = articleRepository.findById(articleId);
-//        return article;
         return articleRepository.findById(articleId);
     }
 

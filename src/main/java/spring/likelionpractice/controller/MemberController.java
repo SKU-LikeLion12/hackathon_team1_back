@@ -13,7 +13,7 @@ public class MemberController {
 
     @PostMapping("/member/add")
     public String signUp(@RequestBody MemberCreateRequest request) {
-        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getNickname());
+        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName());
         if(member == null) return null;
         return memberService.login(request.getUserId(), request.getPassword());
     }
@@ -26,13 +26,13 @@ public class MemberController {
     @PostMapping("/member/{userId}")
     public MemberResponse getMember(@PathVariable("userId") String userId) {
         Member member = memberService.findByUserId(userId);
-        return new MemberResponse(member.getUserId(), member.getNickname());
+        return new MemberResponse(member.getUserId(), member.getName());
     }
 
     @PutMapping("/member")
     public MemberResponse changeMemberName(@RequestBody MemberUpdateRequest request) {
-        Member findMember = memberService.changeName(request.getToken(), request.getNickname());
-        return new MemberResponse(findMember.getUserId(), findMember.getNickname());
+        Member findMember = memberService.changeName(request.getToken(), request.getName());
+        return new MemberResponse(findMember.getUserId(), findMember.getName());
     }
 
     @DeleteMapping("/member")
