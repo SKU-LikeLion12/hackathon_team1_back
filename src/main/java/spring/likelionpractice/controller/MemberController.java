@@ -15,7 +15,8 @@ public class MemberController {
     public String signUp(@RequestBody MemberCreateRequest request) {
         Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getPhone());
         if(member == null) return null;
-        return memberService.login(request.getUserId(), request.getPassword());
+        return "redirect:/info/add/" + member.getId();
+//        return memberService.login(request.getUserId(), request.getPassword());
     }
 
     @PostMapping("/login")

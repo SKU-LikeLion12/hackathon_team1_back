@@ -21,5 +21,7 @@ public class InfoService {
         if (info != null) return null;
         return infoRepository.save(new Info(amountsmk, price, ciga, startsmk, nosmk));
     }
+
+
 }
 
