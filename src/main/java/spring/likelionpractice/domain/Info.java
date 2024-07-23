@@ -17,7 +17,7 @@ public class Info {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
-    private Member member;
+    private Member member;          // 멤버와 연관 키
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate nosmk;        // 금연 시작 일시
@@ -28,7 +28,8 @@ public class Info {
     private int price;                  // 담배 가격
     private int ciga;                   // 담배 한갑당 개비수
 
-    public Info(int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk) {
+    public Info(Member member,int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk) {
+        this.member = member;
         this.amountsmk = amountsmk;
         this.price = price;
         this.ciga = ciga;
