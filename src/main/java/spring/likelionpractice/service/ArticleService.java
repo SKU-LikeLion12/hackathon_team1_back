@@ -17,7 +17,6 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
     private final MemberService memberService;
 
-
     @Transactional
     public Article saveNewArticle(String writerId, String title, String content) {
         Member member = memberService.findByUserId(writerId);

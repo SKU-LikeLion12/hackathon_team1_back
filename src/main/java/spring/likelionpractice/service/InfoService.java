@@ -22,6 +22,5 @@ public class InfoService {
         return infoRepository.save(new Info(amountsmk, price, ciga, startsmk, nosmk));
     }
 
-
 }
 
