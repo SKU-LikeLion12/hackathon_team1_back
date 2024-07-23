@@ -26,13 +26,15 @@ public class Info {
     private int amountsmk;              // 하루 흡연량
     private int price;                  // 담배 가격
     private int ciga;                   // 담배 한갑당 개비수
+    private int tar;                    // 타르 양
 
-    public Info(Member member,int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk) {
+    public Info(Member member,int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk, int tar) {
         this.member = member;
         this.amountsmk = amountsmk;
         this.price = price;
         this.ciga = ciga;
         this.startsmk = startsmk;
         this.nosmk = nosmk;
+        this.tar = tar;
     }
 }

@@ -25,7 +25,8 @@ public class InfoController {
                     request.getNosmk(),
                     request.getAmountsmk(),
                     request.getPrice(),
-                    request.getCiga()
+                    request.getCiga(),
+                    request.getTar()
         );
 
         if (info == null) {

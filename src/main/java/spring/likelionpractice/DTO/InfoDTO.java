@@ -19,6 +19,7 @@ public class InfoDTO {
         private int amountsmk;
         private int price;
         private int ciga;
+        private int tar;
     }
 
     @Data
@@ -28,6 +29,7 @@ public class InfoDTO {
         private int amountsmk;
         private int price;
         private int ciga;
+        private int tar;
 
         public InfoResponse(Info info) {
             this.startsmk = info.getStartsmk();
@@ -35,6 +37,7 @@ public class InfoDTO {
             this.amountsmk = info.getAmountsmk();
             this.price = info.getPrice();
             this.ciga = info.getCiga();
+            this.tar = info.getTar();
         }
     }
 }

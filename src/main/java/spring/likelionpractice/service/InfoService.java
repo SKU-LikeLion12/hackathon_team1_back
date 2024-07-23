@@ -10,7 +10,6 @@ import spring.likelionpractice.repository.MemberRepository;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,10 +22,10 @@ public class InfoService {
     private final InfoRepository infoRepository;
 
     @Transactional
-    public Info signupInfo(Long memberId, LocalDate startsmk,LocalDate nosmk, int amountsmk, int price, int ciga) {
+    public Info signupInfo(Long memberId, LocalDate startsmk,LocalDate nosmk, int amountsmk, int price, int ciga, int tar) {
         Member member = memberRepository.findById(memberId);
         if (member == null) return null;
-        return infoRepository.save(new Info(member ,amountsmk, price, ciga, startsmk, nosmk));
+        return infoRepository.save(new Info(member ,amountsmk, price, ciga, startsmk, nosmk, tar));
     }
 
     @Transactional
@@ -41,39 +40,57 @@ public class InfoService {
     }
 
     @Transactional
-    public int calcNotSmoked(Long infoId) {         // 피우지 않은 담배 개수에 대한 반환값 (현재 날짜 - 금연시작 일시) * 하루 흡연량
+    public int stateOfChange(Long memberId) {           // 상태변화(금연한지 얼마나 지났는지) = 현재 날짜 - 금연 시작 일시
+        Info info = infoRepository.findById(memberId);
+        LocalDate noSmkDay = info.getNosmk();
+        return (int) ChronoUnit.MINUTES.between(localDate, noSmkDay);
+    }
+
+    // 내 성과
+    @Transactional
+    public int calcNotSmoked(Long infoId) {         // 피우지 않은 담배 개수 = (현재 날짜 - 금연시작 일시) * 하루 흡연량
         Info info = infoRepository.findById(infoId);        // Info 테이블 조회
         LocalDate noSmkDay = info.getNosmk();
         return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * info.getAmountsmk());
     }
 
     @Transactional
-    public int calcSaveMoney(Long infoId) {         // 절약한 금액에 대한 반환 값 Math.round((현재 날짜 - 금연시작 일시 * 하루 흡연량 / 한갑당 개비 수)) * 담배 가격
+    public int calcSaveMoney(Long infoId) {         // 절약한 금액 = Math.round((현재 날짜 - 금연시작 일시 * 하루 흡연량 / 한갑당 개비 수)) * 담배 가격
         Info info = infoRepository.findById(infoId);
         LocalDate noSmkDay = info.getNosmk();
         return Math.round((ChronoUnit.DAYS.between(noSmkDay, localDate) * info.getAmountsmk())) * info.getPrice();
     }
 
     @Transactional
-    public int calcLife(Long infoId) {             // 늘어난 수명 (현재 날짜 - 금연시작 일시) * 하루 흡연량 * 11
+    public int calcLife(Long infoId) {             // 늘어난 수명 = (현재 날짜 - 금연시작 일시) * 하루 흡연량 * 11
         Info info = infoRepository.findById(infoId);
         LocalDate noSmkDay = info.getNosmk();
         return (int) (ChronoUnit.MINUTES.between(noSmkDay, localDate) * 60 * 11);
     }
+    // 내 성과
 
+    // 과거 흡연 정보
     @Transactional
-    public int sumSmokedDate(Long infoId) {        // 총 흡연기간 (금연시작 일시 - 흡연 시작 일시)
+    public int sumSmokedDate(Long infoId) {        // 총 흡연기간 = (금연시작 일시 - 흡연 시작 일시)
         Info info = infoRepository.findById(infoId);
         LocalDate noSmkDay = info.getNosmk();
         return (int) ChronoUnit.DAYS.between(noSmkDay, info.getStartsmk());
     }
 
     @Transactional
-    public int sumMoney(Long infoId) {              // 소비한 금액 (금연 시작 일시 - 흡연시작 일시) * 담배가격
+    public int sumMoney(Long infoId) {              // 소비한 금액 = (금연 시작 일시 - 흡연시작 일시) * 담배가격
         Info info = infoRepository.findById(infoId);
         LocalDate noSmkDay = info.getNosmk();
         return (int) ChronoUnit.DAYS.between(noSmkDay, info.getStartsmk()) * info.getPrice();
     }
+
+    @Transactional
+    public int sumTar(Long infoId) {                // 삼킨 타르양 = (금연 시작 일시 - 흡연 시작 일시) * 하루 흡연량 * 타르양
+        Info info = infoRepository.findById(infoId);
+        LocalDate noSmkDay = info.getNosmk();
+        return (int) ChronoUnit.DAYS.between(noSmkDay, info.getStartsmk()) * info.getAmountsmk() * info.getTar();
+    }
+    // 과거 흡연 정보
 
 }
 
