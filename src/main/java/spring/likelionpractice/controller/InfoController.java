@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import spring.likelionpractice.DTO.InfoDTO.*;
 import spring.likelionpractice.domain.Info;
 import spring.likelionpractice.service.InfoService;
-
+import spring.likelionpractice.service.MemberService;
 
 @RestController
 @RequiredArgsConstructor
 public class InfoController {
 
     private final InfoService infoService;
+    private final MemberService memberService;
 
     @PostMapping("/info/add/{memberId}")
     public InfoResponse addInfo(@PathVariable Long memberId, @RequestBody InfoRequest request) {

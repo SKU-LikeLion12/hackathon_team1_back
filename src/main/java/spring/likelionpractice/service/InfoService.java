@@ -8,13 +8,18 @@ import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.InfoRepository;
 import spring.likelionpractice.repository.MemberRepository;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class InfoService {
 
+    private final LocalDate localDate = LocalDate.now();
     private final MemberRepository memberRepository;
     private final InfoRepository infoRepository;
 
@@ -23,6 +28,31 @@ public class InfoService {
         Member member = memberRepository.findById(memberId);
         if (member == null) return null;
         return infoRepository.save(new Info(member ,amountsmk, price, ciga, startsmk, nosmk));
+    }
+
+    @Transactional
+    public Info findMemberInfo(Long memberId) {         // Member 테이블의 id 값으로 Info 테이블의 대응되는 정보 조회
+        Member member = memberRepository.findById(memberId);
+        return infoRepository.findByMemberId(member);
+    }
+
+    @Transactional
+    public List<Info> findAll() {                       // info 테이블의 모든 값 조회
+        return infoRepository.finaAll();
+    }
+
+    @Transactional
+    public int calcNotSmoked(Long infoId) {         // 피우지 않은 담배 개수에 대한 반환값
+        Info info = infoRepository.findById(infoId);        // Info 테이블 조회
+        LocalDate noSmkDay = info.getNosmk();
+        return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * info.getAmountsmk());
+    }
+
+    @Transactional
+    public int calcSaveMoney(Long infoId) {         // 절약한 금액에 대한 반환 값 Math.round((현재 날짜 - 금연시작 일시 * 하루 흡연량 / 한갑당 개비 수)) * 담배 가격
+        Info info = infoRepository.findById(infoId);
+        LocalDate noSmkDay = info.getNosmk();
+        return Math.round((ChronoUnit.DAYS.between(noSmkDay, localDate) * info.getAmountsmk())) * info.getPrice();
     }
 }
 
