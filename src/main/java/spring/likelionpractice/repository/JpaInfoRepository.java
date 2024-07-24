@@ -23,7 +23,8 @@ public class JpaInfoRepository implements InfoRepository {
     // 사실상 primary key id는 의미가 없고 Member 테이블에 대응되는 member_id 값이랑 대응이 되야 함
     @Override
     public Info findByMemberId(Member memberId) {
-        return em.find(Info.class, memberId);
+        return em.createQuery("Select i from Info i where i.member = :memberId", Info.class)
+                .setParameter("memberId", memberId).getSingleResult();
     }
 
     @Override
@@ -32,7 +33,7 @@ public class JpaInfoRepository implements InfoRepository {
     }
 
     @Override
-    public Info findById(Long infoId) {
-        return em.find(Info.class, infoId);
+    public Info findById(Long Id) {
+        return em.find(Info.class, Id);
     }
 }

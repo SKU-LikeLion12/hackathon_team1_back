@@ -12,5 +12,5 @@ public interface InfoRepository {
 
     List<Info> finaAll();
 
-    Info findById(Long infoId);
+    Info findById(Long Id);
 }

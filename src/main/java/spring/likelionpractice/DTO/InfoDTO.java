@@ -23,6 +23,11 @@ public class InfoDTO {
     }
 
     @Data
+    public static class mainRequest {
+        private String token;
+    }
+
+    @Data
     public static class InfoResponse {
         private LocalDate nosmk;
         private LocalDate startsmk;
