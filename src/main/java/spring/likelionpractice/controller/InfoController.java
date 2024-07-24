@@ -8,10 +8,8 @@ import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.service.InfoService;
 import spring.likelionpractice.service.MemberService;
 
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -44,7 +42,7 @@ public class InfoController {
     public Map<String, Object> getMainInfo(@RequestBody mainRequest request) {
         Member member = memberService.tokentoMember(request.getToken());
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new LinkedHashMap<>();
         map.put("금연한지 얼마나 지났는지", infoService.stateOfChange(member));
         map.put("피우지 않은 담배 개수", infoService.calcNotSmoked(member));
         map.put("절약한 금액", infoService.calcSaveMoney(member));
@@ -52,6 +50,36 @@ public class InfoController {
         map.put("총 흡연기간", infoService.sumSmokedDate(member));
         map.put("소비한 금액", infoService.sumMoney(member));
         map.put("삼킨 타르양", infoService.sumTar(member));
+
+        return map;
+    }
+
+    @PostMapping("main/info/change-state")      // 금연한지 몇시간 경과하였는지
+    public Map<String, Object> getChangeState(@RequestBody mainRequest request) {
+        Member member = memberService.tokentoMember(request.getToken());
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("금연한지 경과한 시간", infoService.stateOfChange(member));
+
+        return map;
+    }
+
+    @PostMapping("/main/info/detail-save")      // 절약한 금액 자세히 보기
+    public Map<String, Object> getMainInfoDetailSave(@RequestBody mainRequest request) {
+        Member member = memberService.tokentoMember(request.getToken());
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("절약한 금액", infoService.calcSaveMoney(member));
+
+        return map;
+    }
+
+    @PostMapping("/main/info/detail-life")      // 늘어난 수명 자세히 보기
+    public Map<String, Object> getMainInfoDetailLife(@RequestBody mainRequest request) {
+        Member member = memberService.tokentoMember(request.getToken());
+
+        Map<String, Object> map = new LinkedHashMap<>();
+        map.put("늘어난 수명", infoService.calcLife(member));
 
         return map;
     }
