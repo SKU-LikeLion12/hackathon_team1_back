@@ -14,21 +14,21 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Article {
     @Id @GeneratedValue
-    private Long id;
+    private Long id; // pk
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Member writer;
+    private Member writer; // 게시글 작성자
 
-    private LocalDateTime createDate;
-    private LocalDateTime updateDate;
+    private LocalDateTime createDate; //생성된 시간
+    private LocalDateTime updateDate; //수정된 시간
 
-    private String title;
+    private String title; // 게시글 제목
     @Column(columnDefinition = "TEXT")
-    private String content;
+    private String content; // 게시글 내용
     @Setter
-    private Long likeCount = 0L;
+    private Long likeCount = 0L; // 게시글 좋아요 수
 
     public Article(String title, String content, Member writer) {
         this.createDate = LocalDateTime.now();

@@ -1,19 +1,35 @@
 package spring.likelionpractice.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.web.bind.annotation.*;
+import spring.likelionpractice.domain.Member;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberDTO {
 
+    @Getter
+    @Setter
+    @Data
+    public class UserInfoRequest {
+        private String name;
+        private String phone;
+    }
+
+    @Getter
+    @Setter
+    @Data
+    public class VerificationRequest {
+        private String phone;
+        private String verificationCode;
+    }
+
     @Data
     public static class MemberCreateRequest {
-        private String nickname;
+        private String phone;
         private String userId;
         private String password;
+        private String filename;
     }
 
     @Data

@@ -12,20 +12,32 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class Member {
     @Id @GeneratedValue
-    private Long id;
+    private Long id; // pk
     @Column(unique = true)
-    private String userId;
-    private String password;
+    private String userId; // 아이디
+    private String password;// 비밀번호
+
     @Setter
     private String nickname;
 
-    public Member(String userId, String password, String nickname) {
+    @Setter
+    @Getter
+    @Column(unique = true)
+    private String phone; // 전화번호
+
+    @Setter
+    @Getter
+    private String fileName; // 회원 이미지
+
+    public Member(String userId, String password, String phone, String fileName) {
         this.userId = userId;
         this.setPassword(password);
-        this.nickname = nickname;
+        this.setPhone(phone);
+        this.setFileName(fileName);
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

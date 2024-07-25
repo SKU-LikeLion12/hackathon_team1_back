@@ -21,11 +21,13 @@ public class CommentService {
     private final MemberService memberService;
     private final ArticleService articleService;
 
+
     @Transactional
-    public Comment saveComment(String token, Long article_id, String content) {
+    public Comment saveComment(String token, Long article_id, String content, Comment parentcomment) {
         Member member = memberService.tokentoMember(token);
         Article article = articleService.findArticle(article_id);
-        Comment comment = new Comment(member, article, content);
+        Comment comment = new Comment(member, article, content, parentcomment);
+        commentRepository.saveComment(comment);
         return comment;
     }
 
@@ -51,5 +53,10 @@ public class CommentService {
             comment.updateComment(content);
         }
         return comment;
+    }
+
+    @Transactional
+    public List<Comment> getChildComments(Comment parentComment) {
+        return commentRepository.findChildComments(parentComment);
     }
 }

@@ -16,7 +16,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public CommentResponse createComment(@RequestBody CommentCreateRequest request) {
-        Comment comment = commentService.saveComment(request.getToken(), request.getArticleId(), request.getContent());
+        Comment comment = commentService.saveComment(request.getToken(), request.getArticleId(), request.getContent(), request.getParentcomment());
         return new CommentResponse(comment);
     }
 
@@ -38,5 +38,12 @@ public class CommentController {
             responseComment.add(new CommentResponse(comment));
         }
         return responseComment;
+    }
+
+    @GetMapping("/comment/child-comments/{parentId}")
+    public List<Comment> getChildComments(@PathVariable Long parentId) {
+        Comment parentComment = new Comment();
+        parentComment.setId(parentId);
+        return commentService.getChildComments(parentComment);
     }
 }

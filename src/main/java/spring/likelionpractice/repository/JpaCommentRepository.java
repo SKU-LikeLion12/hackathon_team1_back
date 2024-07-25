@@ -47,4 +47,13 @@ public class JpaCommentRepository implements CommentRepository {
         return em.createQuery("Select distinct c.article from Comment c where c.writer = :member ", Article.class)
                 .setParameter("member", member).getResultList();
     }
+
+    @Override
+    public List<Comment> findChildComments(Comment parentComment) { // 특정 부모 댓글의 대댓글 목록 조회
+        return em.createQuery(
+                        "SELECT c FROM Comment c WHERE c.parentComment = :parentComment", Comment.class)
+                .setParameter("parentComment", parentComment)
+                .getResultList();
+    }
+
 }

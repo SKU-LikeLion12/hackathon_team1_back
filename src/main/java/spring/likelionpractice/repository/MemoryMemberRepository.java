@@ -3,10 +3,7 @@ package spring.likelionpractice.repository;
 import org.springframework.stereotype.Repository;
 import spring.likelionpractice.domain.Member;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MemoryMemberRepository implements MemberRepository {
 
@@ -31,6 +28,11 @@ public class MemoryMemberRepository implements MemberRepository {
             }
         }
         return null;
+    }
+
+    @Override
+    public Optional<Member> findByPhone(String phone) {
+        return Optional.empty();
     }
 
     @Override
