@@ -60,7 +60,7 @@ public class JpaMemberRepository implements MemberRepository {
 
     @Override
     public List<Member> findByName(String name) {
-        return em.createQuery("Select m from Member m where m.nickname = :name", Member.class)
+        return em.createQuery("Select m from Member m where m.name = :name", Member.class)
                 .setParameter("name", name).getResultList();
     }
 

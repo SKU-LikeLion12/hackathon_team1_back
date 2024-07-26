@@ -11,7 +11,7 @@ public class CommentDTO {
         private Long articleId;
         private String content;
         private String token;
-        private Comment parentcomment;
+        private Comment parentComment;
     }
 
     @Data
@@ -39,7 +39,7 @@ public class CommentDTO {
             content = comment.getContent();
             createDate = comment.getCreatedDate();
             isUpdate = !comment.getCreatedDate().equals(comment.getUpdatedDate());
-            writer = comment.getWriter().getNickname();
+            writer = comment.getWriter().getName();
             writer_id = comment.getWriter().getUserId();
         }
     }

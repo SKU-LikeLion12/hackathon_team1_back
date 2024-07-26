@@ -59,4 +59,11 @@ public class CommentService {
     public List<Comment> getChildComments(Comment parentComment) {
         return commentRepository.findChildComments(parentComment);
     }
+
+    @Transactional
+    public Comment addChildComment(Comment parentComment, Comment childComment) {
+        childComment.setParentComment(parentComment);
+        commentRepository.saveComment(childComment);
+        return childComment;
+    }
 }

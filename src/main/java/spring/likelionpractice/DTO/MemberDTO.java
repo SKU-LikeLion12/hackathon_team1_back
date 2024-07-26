@@ -29,7 +29,7 @@ public class MemberDTO {
         private String phone;
         private String userId;
         private String password;
-        private String filename;
+        private String name;
     }
 
     @Data

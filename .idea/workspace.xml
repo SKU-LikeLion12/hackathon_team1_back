@@ -5,49 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ba2718bb-b327-4e83-be01-94467faabc8b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Info.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/InfoRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/service/InfoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentCreateRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentCreateRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentDeleteRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentDeleteRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentUpdateRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/CommentDTO$CommentUpdateRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberCreateRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberCreateRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberDeleteRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberDeleteRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberLoginRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberLoginRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberResponse.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberResponse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberUpdateRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO$MemberUpdateRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/DTO/MemberDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/controller/CommentController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/controller/CommentController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/controller/MemberController.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/controller/MemberController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/domain/Comment.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/domain/Comment.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/domain/Member.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/domain/Member.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/CommentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/CommentRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaCommentRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaCommentRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaLikeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaLikeRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaMemberRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/JpaMemberRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/LikeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/LikeRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/MemberRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/MemberRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/MemoryMemberRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/repository/MemoryMemberRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/service/CommentService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/service/CommentService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/service/MemberService.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/spring/likelionpractice/service/MemberService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/ArticleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/ArticleDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/CommentDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/CommentDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/MemberDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/DTO/MemberDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/controller/CommentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/controller/CommentController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/controller/MemberController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/controller/MemberController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Article.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Article.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Comment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Comment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Member.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/domain/Member.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/CommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/CommentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/JpaCommentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/JpaCommentRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/JpaMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/JpaMemberRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/MemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/MemberRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/MemoryMemberRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/repository/MemoryMemberRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/service/CommentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/service/CommentService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/service/MemberService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/spring/likelionpractice/service/MemberService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +75,7 @@
     "RequestMappingsPanelWidth0": "75",
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.LikelionpracticeApplication.executor": "Debug",
+    "Spring Boot.LikelionpracticeApplication.executor": "Run",
     "git-widget-placeholder": "dmsxor",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/ahtp8/OneDrive/바탕 화면/무연/build.gradle",
@@ -158,7 +127,8 @@
       <workItem from="1721813396005" duration="9019000" />
       <workItem from="1721832510719" duration="369000" />
       <workItem from="1721887864637" duration="3892000" />
-      <workItem from="1721892023727" duration="4793000" />
+      <workItem from="1721892023727" duration="5036000" />
+      <workItem from="1721980780304" duration="5611000" />
     </task>
     <servers />
   </component>

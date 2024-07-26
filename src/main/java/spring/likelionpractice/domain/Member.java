@@ -21,23 +21,24 @@ public class Member {
     private String userId; // 아이디
     private String password;// 비밀번호
 
+    @Getter
     @Setter
-    private String nickname;
+    private String name;
 
     @Setter
     @Getter
     @Column(unique = true)
     private String phone; // 전화번호
 
-    @Setter
-    @Getter
-    private String fileName; // 회원 이미지
+//    @Setter
+//    @Getter
+//    private String fileName; // 회원 이미지
 
-    public Member(String userId, String password, String phone, String fileName) {
+    public Member(String userId, String password, String phone, String Name) {
         this.userId = userId;
         this.setPassword(password);
         this.setPhone(phone);
-        this.setFileName(fileName);
+        this.setName(Name);
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

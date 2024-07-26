@@ -50,7 +50,7 @@ public class MemoryMemberRepository implements MemberRepository {
         List<Member> findMembers = new ArrayList<>();
 
         for(Member member : local.values()) {
-            if (member.getNickname().equals(name)) {
+            if (member.getName().equals(name)) {
                 findMembers.add(member);
             }
         }
