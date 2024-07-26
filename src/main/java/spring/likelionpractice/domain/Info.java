@@ -28,6 +28,9 @@ public class Info {
     private int ciga;                   // 담배 한갑당 개비수
     private int tar;                    // 타르 양
 
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")    // 프로필 이미지
+    private byte[] image = null;
+
     public Info(Member member,int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk, int tar) {
         this.member = member;
         this.amountsmk = amountsmk;
@@ -36,5 +39,15 @@ public class Info {
         this.startsmk = startsmk;
         this.nosmk = nosmk;
         this.tar = tar;
+    }
+
+    public void updateInfo(int amountsmk, int price, int ciga, LocalDate startsmk, LocalDate nosmk, int tar, byte[] image) {
+        this.amountsmk = amountsmk;
+        this.price = price;
+        this.ciga = ciga;
+        this.startsmk = startsmk;
+        this.nosmk = nosmk;
+        this.tar = tar;
+        this.image = image;
     }
 }

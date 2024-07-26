@@ -19,7 +19,7 @@ public class InfoController {
     private final MemberService memberService;
 
     @PostMapping("/info/add/{memberId}")
-    public InfoResponse addInfo(@PathVariable Long memberId, @RequestBody InfoRequest request) {
+    public InfoResponse addInfo(@PathVariable Long memberId, @RequestParam InfoRequest request) {
         Info info = infoService.signupInfo(
                     memberId,
                     request.getStartsmk(),
@@ -35,6 +35,11 @@ public class InfoController {
         }
 
         return new InfoResponse(info);
+    }
+
+    @PutMapping("/info/{memberId}")
+    public InfoResponse updateInfo(@PathVariable Long memberId, @RequestBody ) {
+        Info info = infoService.updateInfo()
     }
 
     // Get 요청을 했을시 가지고 있는 토큰 값을 가지고 출력해야함

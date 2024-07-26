@@ -26,6 +26,7 @@ public class CommentService {
         Member member = memberService.tokentoMember(token);
         Article article = articleService.findArticle(article_id);
         Comment comment = new Comment(member, article, content);
+        commentRepository.saveComment(comment);
         return comment;
     }
 

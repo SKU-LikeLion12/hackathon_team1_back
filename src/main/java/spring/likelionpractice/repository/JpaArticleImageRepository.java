@@ -12,7 +12,6 @@ import java.util.List;
 public class JpaArticleImageRepository implements ArticleImageRepository {
 
     private final EntityManager em;
-    private final ArticleRepository articleRepository;
 
     @Override
     public ArticleImage save(ArticleImage articleImage) {       // 게시물 이미지 경로 저장

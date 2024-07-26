@@ -20,12 +20,21 @@ public class InfoService {
     private final LocalDate localDate = LocalDate.now();
     private final MemberRepository memberRepository;
     private final InfoRepository infoRepository;
+    private final MemberService memberService;
 
     @Transactional
     public Info signupInfo(Long memberId, LocalDate startsmk,LocalDate nosmk, int amountsmk, int price, int ciga, int tar) {
         Member member = memberRepository.findById(memberId);
         if (member == null) return null;
         return infoRepository.save(new Info(member ,amountsmk, price, ciga, startsmk, nosmk, tar));
+    }
+
+    @Transactional
+    public Info updateInfo(String token, LocalDate nosmk, LocalDate startsmk, int amountsmk, int price, int ciga, int tar, byte[] image) {
+        Member member = memberService.tokentoMember(token);
+        Info info = infoRepository.findByMemberId(member);
+        if (member == info.getMember()) info.updateInfo(amountsmk, price, ciga, startsmk, nosmk, tar, image);
+        return info;
     }
 
     @Transactional
@@ -93,6 +102,5 @@ public class InfoService {
         return (int) ChronoUnit.DAYS.between(info.getStartsmk(), noSmkDay) * info.getAmountsmk() * info.getTar();
     }
     // 과거 흡연 정보
-
 }
 

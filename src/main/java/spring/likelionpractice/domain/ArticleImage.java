@@ -10,20 +10,21 @@ import lombok.NoArgsConstructor;
 public class ArticleImage {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
-    private String url;
+                                                                // LONGBLOB 4GB
+    @Lob                                                       // MEDIUMBLOB 8MB
+    @Column(nullable = false, columnDefinition = "MEDIUMBLOB") // TINYBLOB  256byte
+    private byte[] image;                                      // BLOB      64kb
 
     @ManyToOne
     @JoinColumn(name = "article_id")
     private Article article;
 
-    public ArticleImage(String url, Article article) {
-        this.url = url;
+    public ArticleImage(byte[] image, Article article) {
+        this.image = image;
         this.article = article;
     }
 
-    public void update(String url) {
-        this.url = url;
+    public void update(byte[] image) {
+        this.image = image;
     }
 }
