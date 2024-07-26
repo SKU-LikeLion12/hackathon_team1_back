@@ -4,8 +4,11 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
@@ -16,18 +19,56 @@ public class Member {
     @Column(unique = true)
     private String userId;
     private String password;
+    @Setter
     private String phone;
     @Setter
     private String name;
 
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Info info;
+    @Setter
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate noSmk;        // 금연 시작 일시
 
-    public Member(String userId, String password, String name, String phone) {
+    @Setter
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate startSmk;     // 흡연 시작 일시
+    @Setter
+    private int amountSmk;          // 하루 흡연량
+    @Setter
+    private int price;              // 담배 가격
+    @Setter
+    private int ciga;               // 담배 한갑당 개비수
+    @Setter
+    private int tar;                // 타르 양
+
+    @Setter
+    @Column(name = "image", columnDefinition = "MEDIUMBLOB")        // 프로필 이미지
+    private byte[] image = null;
+
+    public Member(String userId, String password, String name, String phone,
+                    LocalDate noSmk, LocalDate startSmk, int amountSmk, int price,
+                    int ciga, int tar) {
         this.userId = userId;
         this.setPassword(password);
         this.name = name;
         this.phone = phone;
+        this.noSmk = noSmk;
+        this.startSmk = startSmk;
+        this.amountSmk = amountSmk;
+        this.price = price;
+        this.ciga = ciga;
+        this.tar = tar;
+    }
+
+    public Member(byte[] image) {
+        this.image = image;
+    }
+
+    public void updateInfo(LocalDate noSmk, LocalDate startSmk, int amountSmk, int ciga, int tar) {
+        this.noSmk = noSmk;
+        this.startSmk = startSmk;
+        this.amountSmk = amountSmk;
+        this.ciga = ciga;
+        this.tar = tar;
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 public class MemberDTO {
@@ -15,6 +17,12 @@ public class MemberDTO {
         private String userId;
         private String password;
         private String phone;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
     }
 
     @Data
@@ -34,6 +42,28 @@ public class MemberDTO {
     public static class MemberUpdateRequest {
         private String token;
         private String name;
+        private String phone;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
+        private byte[] image;
+    }
+
+    @AllArgsConstructor
+    @Data
+    public static class MemberUpdateResponse {
+        private String name;
+        private String phone;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
+        private byte[] image;
     }
 
     @Data
