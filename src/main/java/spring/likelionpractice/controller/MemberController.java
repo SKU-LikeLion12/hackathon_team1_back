@@ -3,11 +3,14 @@ package spring.likelionpractice.controller;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.DTO.MemberDTO.*;
 import spring.likelionpractice.domain.Member;
+import spring.likelionpractice.service.ImageUtility;
 import spring.likelionpractice.service.MemberService;
 
 import java.io.IOException;
@@ -39,13 +42,15 @@ public class MemberController {
         return new MemberResponse(member.getUserId(), member.getName());
     }
 
-    // 수정 필요
-    @PutMapping("/member")
-    public MemberResponse changeMemberInfo(@RequestParam MemberUpdateRequest request, @RequestParam(required = false) MultipartFile image) throws IOException {
+    // RequestPart를 사용하여 form-data 입력을 받아야함,
+    // postman form-data로 send해야함
+    @PutMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MemberUpdateResponse> changeMemberInfo(@RequestPart(name = "request") MemberUpdateRequest request, @RequestPart(required = false, name = "image") MultipartFile image) throws IOException {
         Member findMember = memberService.changeInfo(request.getToken(), request.getName(), request.getPhone(), request.getNoSmk(),
                                                     request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
                                                     request.getTar(), image);
-        return new MemberResponse(findMember.getUserId(), findMember.getName());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberUpdateResponse(request.getName(), request.getPhone(), request.getNoSmk(),
+                                                                request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(), request.getTar(), request.getImage()));
     }
 
     @DeleteMapping("/member")

@@ -63,14 +63,6 @@ public class Member {
         this.image = image;
     }
 
-    public void updateInfo(LocalDate noSmk, LocalDate startSmk, int amountSmk, int ciga, int tar) {
-        this.noSmk = noSmk;
-        this.startSmk = startSmk;
-        this.amountSmk = amountSmk;
-        this.ciga = ciga;
-        this.tar = tar;
-    }
-
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public void setPassword(String password) {

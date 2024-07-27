@@ -32,6 +32,7 @@ public class MemberService {
         if (member == null) return null;
 
         byte[] images = null;
+
         if (image != null) {
             // 이미지를 수정했을때
             images = image.getBytes();      // IOException 예외 처리를 해줘야함
