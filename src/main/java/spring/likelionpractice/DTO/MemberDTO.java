@@ -49,7 +49,6 @@ public class MemberDTO {
         private int price;
         private int ciga;
         private int tar;
-        private byte[] image;
     }
 
     @AllArgsConstructor
