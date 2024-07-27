@@ -42,20 +42,21 @@ public class MemberController {
         return new MemberResponse(member.getUserId(), member.getName());
     }
 
+    @DeleteMapping("/member")
+    public void deleteMember(@RequestBody MemberDeleteRequest request) {
+        memberService.deleteMember(request.getToken());
+    }
+
     // RequestPart를 사용하여 form-data 입력을 받아야함,
     // postman form-data로 send해야함
     @PutMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MemberUpdateResponse> changeMemberInfo(@RequestPart(name = "request") MemberUpdateRequest request, @RequestPart(required = false, name = "image") MultipartFile image) throws IOException {
         Member findMember = memberService.changeInfo(request.getToken(), request.getName(), request.getPhone(), request.getNoSmk(),
-                                                    request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
-                                                    request.getTar(), image);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberUpdateResponse(request.getName(), request.getPhone(), request.getNoSmk(),
-                                                                request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(), request.getTar(), request.getImage()));
-    }
-
-    @DeleteMapping("/member")
-    public void deleteMember(@RequestBody MemberDeleteRequest request) {
-        memberService.deleteMember(request.getToken());
+                request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
+                request.getTar(), image);
+        String encodeImage = ImageUtility.encodeImage(findMember.getImage());
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberUpdateResponse(findMember.getName(), findMember.getPhone(), findMember.getNoSmk(),
+                findMember.getStartSmk(), findMember.getAmountSmk(), findMember.getPrice(), findMember.getCiga(), request.getTar(), encodeImage));
     }
 
     @GetMapping("/member/info")

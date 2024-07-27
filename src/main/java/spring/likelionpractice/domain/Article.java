@@ -50,5 +50,4 @@ public class Article {
         this.content = content;
         this.updateDate = LocalDateTime.now();
     }
-
 }
