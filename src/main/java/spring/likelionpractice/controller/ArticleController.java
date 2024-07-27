@@ -1,13 +1,19 @@
 package spring.likelionpractice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.DTO.ArticleDTO.*;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.service.ArticleService;
+import spring.likelionpractice.service.ImageUtility;
 import spring.likelionpractice.service.JwtUtility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +29,20 @@ public class ArticleController {
         return new ResponseArticle(article);        // 흠.......
     }
 
-    @PostMapping("/article/add")
-    public ResponseArticle addArticle(@RequestBody requestArticle request) {
+    @PostMapping(value ="/article/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseArticle addArticle(@RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
         String userId = jwtUtility.validateToken(request.getToken()).getSubject();
-        Article article = articleService.saveNewArticle(userId, request.getTitle(), request.getContent());
+
+        byte[] imagebyte = image.getBytes();
+
+        Article article = articleService.saveNewArticle(userId, request.getTitle(), request.getContent(), imagebyte);
         return new ResponseArticle(article);
     }
 
-    @PutMapping("/article/{id}")
-    public ResponseArticle updateArticle(@PathVariable("id") Long id, @RequestBody requestArticle request) {
-        Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), request.getToken());
-        return new ResponseArticle(article);
+    @PutMapping(value = "/article/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<ResponseArticle> updateArticle(@PathVariable("id") Long id, @RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
+        Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), request.getToken(), image);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseArticle(article));
     }
 
     @DeleteMapping("/article/{id}")

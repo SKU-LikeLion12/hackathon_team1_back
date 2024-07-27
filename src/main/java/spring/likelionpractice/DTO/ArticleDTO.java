@@ -19,6 +19,7 @@ public class ArticleDTO {
         private LocalDateTime createDate;
         private boolean isChange;
         private Long likeCount;
+        private String image;
 
         public ResponseArticle(Article article) {
             this.title = article.getTitle();
@@ -26,6 +27,7 @@ public class ArticleDTO {
             this.writer = article.getWriter().getName();
             this.createDate = article.getCreateDate();
             this.likeCount = article.getLikeCount();
+            this.image = article.arrayToImage();
 
             if(article.getCreateDate().equals(article.getUpdateDate())) {
                 this.isChange = false;
@@ -40,6 +42,7 @@ public class ArticleDTO {
         private String title;
         private String content;
         private String token;
+        private String image;
     }
 
     @Data

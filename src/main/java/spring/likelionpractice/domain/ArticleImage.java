@@ -3,8 +3,10 @@ package spring.likelionpractice.domain;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class ArticleImage {
@@ -13,7 +15,7 @@ public class ArticleImage {
                                                                 // LONGBLOB 4GB
     @Lob                                                       // MEDIUMBLOB 8MB
     @Column(nullable = false, columnDefinition = "MEDIUMBLOB") // TINYBLOB  256byte
-    private byte[] image;                                      // BLOB      64kb
+    private byte[] image;                                     // BLOB      64kb
 
     @ManyToOne
     @JoinColumn(name = "article_id")
@@ -22,9 +24,5 @@ public class ArticleImage {
     public ArticleImage(byte[] image, Article article) {
         this.image = image;
         this.article = article;
-    }
-
-    public void update(byte[] image) {
-        this.image = image;
     }
 }
