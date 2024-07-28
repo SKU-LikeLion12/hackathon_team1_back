@@ -26,7 +26,7 @@ public class MemberService {
     }
 
     @Transactional
-    public Member changeInfo(String token, String name, String phone, LocalDate noSmk, LocalDate startSmk,
+    public Member changeInfo(String token, String name, String email, LocalDate noSmk, LocalDate startSmk,
                              int amountSmk, int price, int ciga, int tar, MultipartFile image) throws IOException {
         Member member = tokentoMember(token);
         if (member == null) return null;
@@ -41,7 +41,7 @@ public class MemberService {
             images = member.getImage();
         }
         member.setName(name);
-        member.setPhone(phone);
+        member.setEmail(email);
         member.setNoSmk(noSmk);
         member.setStartSmk(startSmk);
         member.setAmountSmk(amountSmk);
@@ -53,12 +53,12 @@ public class MemberService {
     }
 
     @Transactional
-    public Member signUp(String userId, String password, String name, String phone,
+    public Member signUp(String userId, String password, String name, String email,
                          LocalDate noSmk, LocalDate startSmk, int amountSmk,
                          int price, int ciga, int tar) {
         Member member = memberRepository.findByUserId(userId);
         if(member != null) return null;
-        return memberRepository.save(new Member(userId, password, name, phone, noSmk, startSmk, amountSmk, price, ciga, tar));
+        return memberRepository.save(new Member(userId, password, name, email, noSmk, startSmk, amountSmk, price, ciga, tar));
     }
 
     public Member findById(Long id) {

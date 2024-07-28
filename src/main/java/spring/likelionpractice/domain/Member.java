@@ -20,7 +20,7 @@ public class Member {
     private String userId;
     private String password;
     @Setter
-    private String phone;
+    private String email;
     @Setter
     private String name;
 
@@ -44,13 +44,13 @@ public class Member {
     @Column(name = "image", columnDefinition = "MEDIUMBLOB")        // 프로필 이미지
     private byte[] image = null;
 
-    public Member(String userId, String password, String name, String phone,
+    public Member(String userId, String password, String name, String email,
                     LocalDate noSmk, LocalDate startSmk, int amountSmk, int price,
                     int ciga, int tar) {
         this.userId = userId;
         this.setPassword(password);
         this.name = name;
-        this.phone = phone;
+        this.email = email;
         this.noSmk = noSmk;
         this.startSmk = startSmk;
         this.amountSmk = amountSmk;

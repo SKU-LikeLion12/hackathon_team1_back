@@ -16,5 +16,19 @@ spring:
       max-file-size: 10MB
       max-request-size: 100MB
       location: /Users/sungyoon/Desktop/likelionpractice/src/main/resources/static
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: sung25480@gmail.com
+    password: cwju zqig oqip rvah
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+
 #    database-platform:
 #    Upload file Setting

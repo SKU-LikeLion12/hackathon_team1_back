@@ -24,7 +24,7 @@ public class MemberController {
 
     @PostMapping("/member/add")
     public String signUp(@RequestBody MemberCreateRequest request) {
-        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getPhone(),
+        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getEmail(),
                                             request.getNoSmk(), request.getStartSmk(), request.getAmountSmk(),
                                             request.getPrice(), request.getCiga(), request.getTar());
         if(member == null) return null;
@@ -51,14 +51,15 @@ public class MemberController {
     // postman form-data로 send해야함
     @PutMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MemberUpdateResponse> changeMemberInfo(@RequestPart(name = "request") MemberUpdateRequest request, @RequestPart(required = false, name = "image") MultipartFile image) throws IOException {
-        Member findMember = memberService.changeInfo(request.getToken(), request.getName(), request.getPhone(), request.getNoSmk(),
+        Member findMember = memberService.changeInfo(request.getToken(), request.getName(), request.getEmail(), request.getNoSmk(),
                 request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
                 request.getTar(), image);
         String encodeImage = ImageUtility.encodeImage(findMember.getImage());
-        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberUpdateResponse(findMember.getName(), findMember.getPhone(), findMember.getNoSmk(),
+        return ResponseEntity.status(HttpStatus.CREATED).body(new MemberUpdateResponse(findMember.getName(), findMember.getEmail(), findMember.getNoSmk(),
                 findMember.getStartSmk(), findMember.getAmountSmk(), findMember.getPrice(), findMember.getCiga(), request.getTar(), encodeImage));
     }
 
+    // 헤더에 토큰 넣어서 Bearer
     @GetMapping("/member/info")
     public Map<String, Object> getMainInfo(@RequestHeader("Authorization") String bearerToken) {      // 로그인 했을때 메인 페이지 출력
         String token = bearerToken.replace("Bearer ", "");

@@ -16,7 +16,7 @@ public class MemberDTO {
         private String name;
         private String userId;
         private String password;
-        private String phone;
+        private String email;
         private LocalDate noSmk;
         private LocalDate startSmk;
         private int amountSmk;
@@ -42,7 +42,7 @@ public class MemberDTO {
     public static class MemberUpdateRequest {
         private String token;
         private String name;
-        private String phone;
+        private String email;
         private LocalDate noSmk;
         private LocalDate startSmk;
         private int amountSmk;
@@ -55,7 +55,7 @@ public class MemberDTO {
     @Data
     public static class MemberUpdateResponse {
         private String name;
-        private String phone;
+        private String email;
         private LocalDate noSmk;
         private LocalDate startSmk;
         private int amountSmk;
