@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.DTO.MemberDTO.*;
 import spring.likelionpractice.domain.Member;
+import spring.likelionpractice.repository.MemberRepository;
 import spring.likelionpractice.service.ImageUtility;
 import spring.likelionpractice.service.MemberService;
 
@@ -20,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
+    private final MemberRepository memberRepository;
     private final MemberService memberService;
 
     @PostMapping("/member/add")
@@ -29,6 +31,14 @@ public class MemberController {
                                             request.getPrice(), request.getCiga(), request.getTar());
         if(member == null) return null;
         return memberService.login(request.getUserId(), request.getPassword());
+    }
+
+    // 아이디 중복 체크
+    @GetMapping("/member/{idCheck}")
+    public String idCheck(@PathVariable String idCheck) {
+        Member member = memberRepository.findByUserId(idCheck);
+        if(member != null) return "이미 존재하는 아이디입니다.";
+        return "사용 가능한 아이디입니다.";
     }
 
     @PostMapping("/login")

@@ -20,6 +20,7 @@ public class Member {
     private String userId;
     private String password;
     @Setter
+    @Column(unique = true)
     private String email;
     @Setter
     private String name;

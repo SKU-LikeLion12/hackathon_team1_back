@@ -77,6 +77,8 @@ public class MemberService {
         return memberRepository.findByUserId(userId);
     }
 
+    public Member findByEmail(String email) { return memberRepository.findByEmail(email); }
+
     public List<Member> findByName(String name) {
         return memberRepository.findByName(name);
     }
