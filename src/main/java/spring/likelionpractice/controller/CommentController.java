@@ -1,6 +1,7 @@
 package spring.likelionpractice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.likelionpractice.DTO.CommentDTO.*;
 import spring.likelionpractice.domain.Comment;
@@ -16,7 +17,7 @@ public class CommentController {
 
     @PostMapping("/comment")
     public CommentResponse createComment(@RequestBody CommentCreateRequest request) {
-        Comment comment = commentService.saveComment(request.getToken(), request.getArticleId(), request.getContent());
+        Comment comment = commentService.saveComment(request.getToken(), request.getArticleId(), request.getContent(), request.getParentComment());
         return new CommentResponse(comment);
     }
 
@@ -38,5 +39,20 @@ public class CommentController {
             responseComment.add(new CommentResponse(comment));
         }
         return responseComment;
+    }
+
+    @PostMapping("/comment/{parentId}/add-child") // 대댓글 조회
+    public ResponseEntity<Comment> addChildComment(@PathVariable Long parentId, @RequestBody Comment childComment) {
+        Comment parentComment = new Comment();
+        parentComment.setId(parentId);
+        Comment savedChildComment = commentService.addChildComment(parentComment, childComment);
+        return ResponseEntity.ok(savedChildComment);
+    }
+
+    @GetMapping("/comment/child-comments/{parentId}") // 대댓글 생성
+    public List<Comment> getChildComments(@PathVariable Long parentId) {
+        Comment parentComment = new Comment();
+        parentComment.setId(parentId);
+        return commentService.getChildComments(parentComment);
     }
 }

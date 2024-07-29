@@ -11,6 +11,7 @@ public class CommentDTO {
         private Long articleId;
         private String content;
         private String token;
+        private Comment parentComment;
     }
 
     @Data

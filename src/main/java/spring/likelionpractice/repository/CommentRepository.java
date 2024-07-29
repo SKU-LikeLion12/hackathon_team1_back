@@ -19,4 +19,6 @@ public interface CommentRepository {
 
     List<Article> findMemberCommentArticle(Member member);      // 특정 멤버가 댓글을 작성한 적이 있는 게시글 목록 조회
 
+    List<Comment> findChildComments(Comment parentComment);    // 특정 부모 댓글의 대댓글 목록 조회
+
 }
