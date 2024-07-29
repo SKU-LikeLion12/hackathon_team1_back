@@ -1,35 +1,28 @@
 package spring.likelionpractice.DTO;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import spring.likelionpractice.domain.Member;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
 public class MemberDTO {
 
-    @Getter
-    @Setter
-    @Data
-    public class UserInfoRequest {
-        private String name;
-        private String phone;
-    }
-
-    @Getter
-    @Setter
-    @Data
-    public class VerificationRequest {
-        private String phone;
-        private String verificationCode;
-    }
-
     @Data
     public static class MemberCreateRequest {
-        private String phone;
+        private String name;
         private String userId;
         private String password;
-        private String name;
+        private String email;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
     }
 
     @Data
@@ -42,13 +35,34 @@ public class MemberDTO {
     @Data
     public static class MemberResponse {        // 내부 클래스를 static으로 선언하여 외부 클래스 new 키워드 없이 생성 가능
         private String userId;
-        private String nickname;
+        private String name;
     }
 
     @Data
     public static class MemberUpdateRequest {
         private String token;
-        private String nickname;
+        private String name;
+        private String email;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
+    }
+
+    @AllArgsConstructor
+    @Data
+    public static class MemberUpdateResponse {
+        private String name;
+        private String email;
+        private LocalDate noSmk;
+        private LocalDate startSmk;
+        private int amountSmk;
+        private int price;
+        private int ciga;
+        private int tar;
+        private String image;
     }
 
     @Data

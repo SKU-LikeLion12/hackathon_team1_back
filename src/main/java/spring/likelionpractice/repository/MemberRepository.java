@@ -3,7 +3,6 @@ package spring.likelionpractice.repository;
 import spring.likelionpractice.domain.Member;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface MemberRepository {
     Member save(Member member);
@@ -12,12 +11,11 @@ public interface MemberRepository {
 
     Member findByUserId(String userId);
 
-    Optional<Member> findByPhone(String phone);
+    Member findByEmail(String email);
 
     List<Member> findAll();
 
     void deleteMember(Member member);
 
-    List<Member> findByName(String name);
-
+    Member findByNameAndEmail(String name, String email);
 }

@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/likelionpractice.iml" filepath="$PROJECT_DIR$/.idea/modules/likelionpractice.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/likelionpractice.main.iml" filepath="$PROJECT_DIR$/.idea/modules/likelionpractice.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/likelionpractice.test.iml" filepath="$PROJECT_DIR$/.idea/modules/likelionpractice.test.iml" />
     </modules>
   </component>
 </project>

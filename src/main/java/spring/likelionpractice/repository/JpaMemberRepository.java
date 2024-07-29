@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import spring.likelionpractice.domain.Member;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -37,14 +36,12 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
-    public Optional<Member> findByPhone(String phone) {
+    public Member findByEmail(String email) {
         try {
-            Member member = em.createQuery("SELECT m FROM Member m WHERE m.phone = :phone", Member.class)
-                    .setParameter("phone", phone)
-                    .getSingleResult();
-            return Optional.of(member);
+            return em.createQuery("Select m from Member m where m.email = :email", Member.class)
+                    .setParameter("email", email).getSingleResult();
         } catch (NoResultException e) {
-            return Optional.empty();
+            return null;
         }
     }
 
@@ -59,9 +56,13 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
-    public List<Member> findByName(String name) {
-        return em.createQuery("Select m from Member m where m.name = :name", Member.class)
-                .setParameter("name", name).getResultList();
+    public Member findByNameAndEmail(String name, String email) {
+        try {
+            return em.createQuery("Select m from Member m where m.name = :name and m.email = :email", Member.class)
+                    .setParameter("name", name)
+                    .setParameter("email", email).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
-
 }
