@@ -79,8 +79,8 @@ public class MemberService {
 
     public Member findByEmail(String email) { return memberRepository.findByEmail(email); }
 
-    public List<Member> findByName(String name) {
-        return memberRepository.findByName(name);
+    public Member findByEmailAndName(String name, String email) {
+        return memberRepository.findByNameAndEmail(name, email);
     }
 
     public List<Member> findAll() {

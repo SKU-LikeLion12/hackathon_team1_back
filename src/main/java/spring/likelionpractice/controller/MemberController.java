@@ -12,6 +12,7 @@ import spring.likelionpractice.DTO.MemberDTO.*;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.MemberRepository;
 import spring.likelionpractice.service.ImageUtility;
+import spring.likelionpractice.service.MailService;
 import spring.likelionpractice.service.MemberService;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
+    private final MailService mailService;
     private final MemberRepository memberRepository;
     private final MemberService memberService;
 
@@ -40,6 +42,22 @@ public class MemberController {
         Member member = memberRepository.findByUserId(idCheck);
         if(member != null) return "이미 존재하는 아이디입니다.";
         return "사용 가능한 아이디입니다.";
+    }
+
+    // 아이디 찾기 이메일 인증 까지 만들어야함
+    @PostMapping("/member/id-find")
+    public String idFind(@RequestParam String name, @RequestParam String email) {
+        Member member = memberService.findByEmailAndName(name, email);
+        if(member != null) return member.getName();
+        return "name" + "님의 아이디에 대한 정보가 존재하지 않습니다.";
+    }
+
+    // 비밀번호 재설정
+    @PostMapping("/member/password-reset")
+    public String passwordReset(@RequestParam String password, String userId) {
+        Member member = memberService.findByUserId(userId);
+        member.setPassword(password);
+        return "비밀번호 재설정 완료";
     }
 
     @PostMapping("/login")
