@@ -34,6 +34,7 @@ public class MemberController {
     }
 
     // 아이디 중복 체크
+    // 이메일도 해야함
     @GetMapping("/member/{idCheck}")
     public String idCheck(@PathVariable String idCheck) {
         Member member = memberRepository.findByUserId(idCheck);
