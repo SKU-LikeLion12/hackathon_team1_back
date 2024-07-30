@@ -19,9 +19,10 @@ public class MailService {
 
     // 난수 생성
     public static void createNumber() {
-        number = (int)(Math.random() * (90000)) + 1000000;
+        number = (int)(Math.random() * (999999)) + 9000000;
     }
 
+    @Transactional
     public MimeMessage createMail(String mail) throws MessagingException, UnsupportedEncodingException {
         createNumber();
         MimeMessage mimeMessage = mailSender.createMimeMessage();

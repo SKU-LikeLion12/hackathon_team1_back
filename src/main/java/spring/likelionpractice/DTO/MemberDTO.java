@@ -69,4 +69,10 @@ public class MemberDTO {
     public static class MemberDeleteRequest {
         private String token;
     }
+
+    @Data
+    @AllArgsConstructor
+    public static class LoginResponse {
+        private String token;
+    }
 }

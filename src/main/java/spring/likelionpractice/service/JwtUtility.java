@@ -29,13 +29,8 @@ public class JwtUtility {
                     .getBody();
 
             return claims;
-        } catch (SignatureException ex) {
-            System.out.println("Invalid JWT signature");
-        } catch (ExpiredJwtException ex) {
-            System.out.println("Expired JWT token");
         } catch (Exception ex) {
-            System.out.println("Invalid JWT token");
+            throw ex;
         }
-        return null;
     }
 }

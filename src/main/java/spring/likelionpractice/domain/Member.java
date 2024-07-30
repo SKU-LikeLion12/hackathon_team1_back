@@ -1,6 +1,7 @@
 package spring.likelionpractice.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,21 +17,21 @@ import java.time.LocalDate;
 public class Member {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(unique = true)
     private String userId;
     private String password;
+
     @Setter
     @Column(unique = true)
     private String email;
     @Setter
     private String name;
 
-    @Setter
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Setter @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate noSmk;        // 금연 시작 일시
 
-    @Setter
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Setter @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startSmk;     // 흡연 시작 일시
     @Setter
     private int amountSmk;          // 하루 흡연량
@@ -41,8 +42,7 @@ public class Member {
     @Setter
     private int tar;                // 타르 양
 
-    @Setter
-    @Column(name = "image", columnDefinition = "MEDIUMBLOB")        // 프로필 이미지
+    @Setter @Column(name = "image", columnDefinition = "MEDIUMBLOB")        // 프로필 이미지
     private byte[] image = null;
 
     public Member(String userId, String password, String name, String email,

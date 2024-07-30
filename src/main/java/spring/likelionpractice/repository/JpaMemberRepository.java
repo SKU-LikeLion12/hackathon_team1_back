@@ -36,6 +36,17 @@ public class JpaMemberRepository implements MemberRepository {
     }
 
     @Override
+    public Member findByUserIdAndEmail(String userId, String email) {
+        try {
+            return em.createQuery("Select m from Member m where m.userId = :userId and m.email = :email", Member.class)
+                    .setParameter("userId", userId)
+                    .setParameter("email", email).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
     public Member findByEmail(String email) {
         try {
             return em.createQuery("Select m from Member m where m.email = :email", Member.class)

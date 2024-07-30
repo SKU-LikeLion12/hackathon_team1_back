@@ -17,5 +17,7 @@ public interface MemberRepository {
 
     void deleteMember(Member member);
 
+    Member findByUserIdAndEmail(String userId, String email);
+
     List<Member> findByName(String name);
 }
