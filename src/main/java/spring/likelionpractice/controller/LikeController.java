@@ -1,5 +1,6 @@
 package spring.likelionpractice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ public class LikeController {
     private final LikeService likeService;
     private final MemberService memberService;
 
+    @Operation(summary = "로그인한 후 게시물에 대한 좋아요", description = "게시물에 대한 좋아요")
     @PostMapping("/like")       // 유저당 게시글에 좋아요 1개(한번 더 누르면 좋아요 취소)
     public LikeResponse like(@RequestBody LikeRequest request) {
         Member member = memberService.tokentoMember(request.getToken());

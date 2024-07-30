@@ -95,28 +95,24 @@ public class MemberService {
     }
 
     // 내 상태변화
-    @Transactional
     public int stateOfChange(Member memberId) {            // 금연한지 얼마나 지났는지
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
         return (int) ChronoUnit.DAYS.between(noSmkDay, localDate) * 1440;
     }
 
-    @Transactional
     public int calcNotSmoked(Member memberId) {            // 피우지 않은 담배 개수 = (현재 날짜 - 금연시작 일시) * 하루 흡연량
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
         return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * member.getAmountSmk());
     }
 
-    @Transactional
     public int calcSaveMoney(Member memberId) {            // 절약한 금액 = Math.round((현재 날짜 - 금연시작 일시 * 하루 흡연량 / 한갑당 개비 수)) * 담배 가격
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
         return Math.round((ChronoUnit.DAYS.between(noSmkDay, localDate) * member.getAmountSmk())) * member.getPrice();
     }
 
-    @Transactional
     public int calcLife(Member memberId) {             // 늘어난 수명 = (현재 날짜 - 금연시작 일시) * 하루 흡연량 * 11
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
@@ -125,21 +121,18 @@ public class MemberService {
     // 내 성과
 
     // 과거 흡연 정보
-    @Transactional
     public int sumSmokedDate(Member memberId) {        // 총 흡연기간 = (금연시작 일시 - 흡연 시작 일시)
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
         return (int) ChronoUnit.DAYS.between(member.getStartSmk(), noSmkDay);
     }
 
-    @Transactional
     public int sumMoney(Member memberId) {              // 소비한 금액 = (금연 시작 일시 - 흡연시작 일시) * 담배가격
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
         return (int) ChronoUnit.DAYS.between(member.getStartSmk(), noSmkDay) * member.getPrice();
     }
 
-    @Transactional
     public int sumTar(Member memberId) {                // 삼킨 타르양 = (금연 시작 일시 - 흡연 시작 일시) * 하루 흡연량 * 타르양
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();

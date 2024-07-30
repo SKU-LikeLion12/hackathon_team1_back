@@ -1,5 +1,6 @@
 package spring.likelionpractice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,12 +24,14 @@ public class ArticleController {
     private final ArticleService articleService;
     private final JwtUtility jwtUtility;
 
+    @Operation(summary = "게시물 조회", description = "게시물 조회", tags = "getArticle")
     @GetMapping("/article/{id}")
     public ResponseArticle getArticle(@PathVariable("id") Long id) {
         Article article = articleService.findArticle(id);
         return new ResponseArticle(article);        // 흠.......
     }
 
+    @Operation(summary = "게시물 생성", description = "게시물 생성(title, content, token, image)", tags = "PostArticle")
     @PostMapping(value ="/article/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseArticle addArticle(@RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
         String userId = jwtUtility.validateToken(request.getToken()).getSubject();
@@ -39,17 +42,20 @@ public class ArticleController {
         return new ResponseArticle(article);
     }
 
+    @Operation(summary = "게시물 수정", description = "본인이 생성한 게시물 수정(title, content, token, image)", tags = "PutArticle")
     @PutMapping(value = "/article/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseArticle> updateArticle(@PathVariable("id") Long id, @RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
         Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), request.getToken(), image);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseArticle(article));
     }
 
+    @Operation(summary = "게시물 삭제", description = "본인이 생성한 게시물 삭제(token)", tags = "DeleteArticle")
     @DeleteMapping("/article/{id}")
     public void deleteArticle(@PathVariable("id") Long id, @RequestBody requestArticle request) {
         articleService.deleteArticle(id, request.getToken());
     }
 
+    @Operation(summary = "전체 게시물 조회", description = "생성된 게시물 전체 조회", tags = "GetAllArticle")
     @GetMapping("/articles/all")
     public List<ResponseArticle> getAllArticles() {
         List<ResponseArticle> responseArticles = new ArrayList<>();
@@ -59,6 +65,7 @@ public class ArticleController {
         return responseArticles;
     }
 
+    @Operation(summary = "내가 생성한 게시물 전체 조회", description = "내가 생성한 게시물 조회", tags = "GetMemberArticle")
     @GetMapping("/articles/all/{userid}")
     public List<ResponseArticle> getAllArticlesByUserId(@PathVariable("memberId") String memberId) {
         List<ResponseArticle> responseArticles = new ArrayList<>();
