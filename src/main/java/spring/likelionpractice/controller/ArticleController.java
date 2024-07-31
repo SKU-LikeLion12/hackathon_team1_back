@@ -24,38 +24,38 @@ public class ArticleController {
     private final ArticleService articleService;
     private final JwtUtility jwtUtility;
 
-    @Operation(summary = "게시물 조회", description = "게시물 조회", tags = "getArticle")
+    @Operation(summary = "게시물 조회", description = "{id}로 조회", tags = "Article")
     @GetMapping("/article/{id}")
     public ResponseArticle getArticle(@PathVariable("id") Long id) {
         Article article = articleService.findArticle(id);
-        return new ResponseArticle(article);        // 흠.......
+        return new ResponseArticle(article);
     }
 
-    @Operation(summary = "게시물 생성", description = "게시물 생성(title, content, token, image)", tags = "PostArticle")
+    @Operation(summary = "게시물 생성", description = "(title, content, token, image)", tags = "Article")
     @PostMapping(value ="/article/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseArticle addArticle(@RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
         String userId = jwtUtility.validateToken(request.getToken()).getSubject();
 
-        byte[] imagebyte = image.getBytes();
+        byte[] imageByte = image.getBytes();
 
-        Article article = articleService.saveNewArticle(userId, request.getTitle(), request.getContent(), imagebyte);
+        Article article = articleService.saveNewArticle(userId, request.getTitle(), request.getContent(), imageByte);
         return new ResponseArticle(article);
     }
 
-    @Operation(summary = "게시물 수정", description = "본인이 생성한 게시물 수정(title, content, token, image)", tags = "PutArticle")
+    @Operation(summary = "게시물 수정", description = "본인이 생성한 게시물 수정(title, content, token, image)", tags = "Article")
     @PutMapping(value = "/article/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ResponseArticle> updateArticle(@PathVariable("id") Long id, @RequestPart requestArticle request, @RequestPart MultipartFile image) throws IOException {
         Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), request.getToken(), image);
         return ResponseEntity.status(HttpStatus.CREATED).body(new ResponseArticle(article));
     }
 
-    @Operation(summary = "게시물 삭제", description = "본인이 생성한 게시물 삭제(token)", tags = "DeleteArticle")
+    @Operation(summary = "게시물 삭제", description = "본인이 생성한 게시물 삭제(token)", tags = "Article")
     @DeleteMapping("/article/{id}")
     public void deleteArticle(@PathVariable("id") Long id, @RequestBody requestArticle request) {
         articleService.deleteArticle(id, request.getToken());
     }
 
-    @Operation(summary = "전체 게시물 조회", description = "생성된 게시물 전체 조회", tags = "GetAllArticle")
+    @Operation(summary = "전체 게시물 조회", description = "게시물 전체 조회 리스트", tags = "Article")
     @GetMapping("/articles/all")
     public List<ResponseArticle> getAllArticles() {
         List<ResponseArticle> responseArticles = new ArrayList<>();
@@ -65,11 +65,11 @@ public class ArticleController {
         return responseArticles;
     }
 
-    @Operation(summary = "내가 생성한 게시물 전체 조회", description = "내가 생성한 게시물 조회", tags = "GetMemberArticle")
-    @GetMapping("/articles/all/{userid}")
-    public List<ResponseArticle> getAllArticlesByUserId(@PathVariable("memberId") String memberId) {
+    @Operation(summary = "내가 생성한 게시물 전체 조회", description = "{userId}로 내가 생성한 게시물 조회", tags = "Article")
+    @GetMapping("/articles/all/{userId}")
+    public List<ResponseArticle> getAllArticlesByUserId(@PathVariable("userId") String userId) {
         List<ResponseArticle> responseArticles = new ArrayList<>();
-        for(Article article : articleService.findUserArticle(memberId)) {
+        for(Article article : articleService.findUserArticle(userId)) {
             responseArticles.add(new ResponseArticle(article));
         }
         return responseArticles;

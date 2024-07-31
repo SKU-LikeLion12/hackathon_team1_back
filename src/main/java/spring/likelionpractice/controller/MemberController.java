@@ -89,16 +89,20 @@ public class MemberController {
 
     @Operation(summary = "비밀번호 초기화", description = "새로운 password 생성", tags = "member")
     @PostMapping("/member/resetPassword")
-    public String resetPassword(@RequestParam String password, HttpSession session) {
-        Long memberId = (Long) session.getAttribute("resetPasswordMemberId");
-        if (memberId == null) {
-            return "비밀번호 찾기 절차를 다시 수행해주세요";
+    public ResponseEntity<?> resetPassword(@RequestParam String password, HttpSession session) {
+        try {
+            Long memberId = (Long) session.getAttribute("resetPasswordMemberId");
+            if (memberId == null) {
+                return ResponseEntity.ok("비밀번호 찾기 절차를 다시 수행해주세요");
+            }
+            Member member = memberRepository.findById(memberId);
+            member.setPassword(password);
+            memberRepository.save(member);
+            session.removeAttribute("resetPasswordMemberId");
+            return ResponseEntity.ok("비밀번호가 성공적으로 재설정되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("발견 못한 오류입니다.");
         }
-        Member member = memberRepository.findById(memberId);
-        member.setPassword(password);
-        memberRepository.save(member);
-        session.removeAttribute("resetPasswordMemberId");
-        return "비밀번호가 성공적으로 재설정되었습니다.";
     }
 
     @Operation(summary = "회원 탈퇴", description = "로그인 성공 후 회원 탈퇴(토큰 값으로 회원을 찾아 삭제)", tags = "member")
@@ -137,7 +141,7 @@ public class MemberController {
 
     // 헤더에 토큰 넣어서 Bearer
     @Operation(summary = "메인화면 홈", description = "로그인 성공 후 메인화면 페이지(내 현황(피우지않은 담배 개수(개), 절약한 금액(원), 늘어난 수명(분)), 흡연정보(총 흡연기간(일), 소비한 금액(원), 삼킨 타르 양(mg))", tags = "main")
-    @GetMapping("/member/info")
+    @GetMapping("/main/info")
     public ResponseEntity<?> getMainInfo(@RequestHeader("Authorization") String bearerToken) {      // 로그인 했을때 메인 페이지 출력
         try {
             String token = bearerToken.replace("Bearer ", "");
@@ -198,7 +202,7 @@ public class MemberController {
         try {
             String token = bearerToken.replace("Bearer ", "");
             Member member = memberService.tokentoMember(token);
-            int state = memberService.stateOfChange(member);
+            int state = memberService.calcLife(member);
 
             return ResponseEntity.ok(state);
         } catch (InvalidCredentialsException e) {
@@ -220,7 +224,7 @@ public class MemberController {
         }
     }
 
-    @Operation(summary = "이메일 인증번호 체크", description = "회원가입시 인증번호 맞는지 안맞는지(userNumber)", tags = "email")
+    @Operation(summary = "이메일 인증번호 전송(재전송)", description = "회원가입시 인증번호 맞는지 안맞는지(userNumber)", tags = "email")
     @GetMapping("/mailCheck")
     public ResponseEntity<?> mailCheck(@RequestParam String userNumber) {
         try {
@@ -230,11 +234,5 @@ public class MemberController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-    }
-
-    @PostMapping("/member/{userId}")
-    public MemberResponse getMember(@PathVariable("userId") String userId) {
-        Member member = memberService.findByUserId(userId);
-        return new MemberResponse(member.getUserId(), member.getName());
     }
 }
