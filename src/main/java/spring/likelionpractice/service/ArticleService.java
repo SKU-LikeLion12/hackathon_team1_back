@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import spring.likelionpractice.Exception.InvalidCredentialsException;
+import spring.likelionpractice.Exception.InvalidIdException;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.ArticleRepository;
@@ -22,6 +24,11 @@ public class ArticleService {
     @Transactional
     public Article saveNewArticle(String writerId, String title, String content, byte[] image) {
         Member member = memberService.findByUserId(writerId);
+
+        if (member == null) {
+            throw new InvalidCredentialsException();
+        }
+
         Article article = new Article(title, content, member, image);
         articleRepository.saveNewArticle(article);
         return article;
@@ -52,6 +59,14 @@ public class ArticleService {
     public void deleteArticle(Long articleId, String token) {
         Member member = memberService.tokentoMember(token);
         Article article = articleRepository.findById(articleId);
+
+        if (member == null) {
+            throw new InvalidCredentialsException();
+        }
+
+        if (article == null) {
+            throw new InvalidIdException();
+        }
         if (member == article.getWriter()) {
             articleRepository.deleteArticle(article);
         }
@@ -59,7 +74,11 @@ public class ArticleService {
 
     @Transactional
     public Article findArticle(Long articleId) {
-        return articleRepository.findById(articleId);
+        Article article = articleRepository.findById(articleId);
+        if (article == null) {
+            throw new InvalidIdException();
+        }
+        return article;
     }
 
     @Transactional

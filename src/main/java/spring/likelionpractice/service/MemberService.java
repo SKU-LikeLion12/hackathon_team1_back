@@ -4,6 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import spring.likelionpractice.Exception.DuplicatedException;
+import spring.likelionpractice.Exception.InvalidCredentialsException;
+import spring.likelionpractice.Exception.InvalidIdException;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.MemberRepository;
 
@@ -22,7 +25,12 @@ public class MemberService {
     private final JwtUtility jwtUtility;
 
     public Member tokentoMember(String token) {
-        return memberRepository.findByUserId(jwtUtility.validateToken(token).getSubject());
+        Member member = memberRepository.findByUserId(jwtUtility.validateToken(token).getSubject());
+
+        if (member == null) {
+            throw new InvalidCredentialsException();
+        }
+        return member;
     }
 
     @Transactional
@@ -57,11 +65,16 @@ public class MemberService {
                          LocalDate noSmk, LocalDate startSmk, int amountSmk,
                          int price, int ciga, int tar) {
         Member member = memberRepository.findByUserId(userId);
-        if(member != null) return null;
+        if(member != null) throw new DuplicatedException();
         return memberRepository.save(new Member(userId, password, name, email, noSmk, startSmk, amountSmk, price, ciga, tar));
     }
 
     public Member findById(Long id) {
+        Member member = memberRepository.findById(id);
+
+        if (member == null) {
+            throw new InvalidIdException();
+        }
         return memberRepository.findById(id);
     }
 
@@ -70,7 +83,7 @@ public class MemberService {
         if(member != null && member.checkPassword(password)) {
             return jwtUtility.generateToken(member.getUserId());
         }
-        return null;
+        throw new InvalidCredentialsException();
     }
 
     public Member findByUserId(String userId) {
@@ -89,7 +102,7 @@ public class MemberService {
 
     public boolean deleteMember(String token) {
         Member member = tokentoMember(token);
-        if(member == null) return false;
+        if(member == null) throw new InvalidCredentialsException();
         memberRepository.deleteMember(member);
         return true;
     }

@@ -2,10 +2,12 @@ package spring.likelionpractice.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import spring.likelionpractice.DTO.LikeDTO;
 import spring.likelionpractice.DTO.LikeDTO.*;
+import spring.likelionpractice.Exception.InvalidCredentialsException;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.service.LikeService;
@@ -22,12 +24,16 @@ public class LikeController {
 
     @Operation(summary = "로그인한 후 게시물에 대한 좋아요", description = "게시물에 대한 좋아요", tags = "like")
     @PostMapping("/like")       // 유저당 게시글에 좋아요 1개(한번 더 누르면 좋아요 취소)
-    public LikeResponse like(@RequestBody LikeRequest request) {
-        Member member = memberService.tokentoMember(request.getToken());
-        boolean liked = likeService.clickLike(request.getArticleId(), member.getId());
-        Long likeCount = likeService.findByArticleIdLikeCount(request.getArticleId());
+    public ResponseEntity<LikeResponse> like(@RequestBody LikeRequest request) {
+        try {
+            Member member = memberService.tokentoMember(request.getToken());
+            boolean liked = likeService.clickLike(request.getArticleId(), member.getId());
+            Long likeCount = likeService.findByArticleIdLikeCount(request.getArticleId());
 
-        return new LikeResponse(liked, likeCount);
+            return ResponseEntity.ok(new LikeResponse(liked, likeCount));
+        } catch (InvalidCredentialsException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
     }
 
     @Operation(summary = "해당 게시글의 좋아요 개수", description = "게시글 좋아요 개수", tags = "like")
@@ -52,12 +58,12 @@ public class LikeController {
 
     @Operation(summary = "게시글 별 좋아요 개수 불러오기", tags = "like")
     @GetMapping("/likes")           // 게시물 리스트 불러올 때 각 게시글 별 좋아요 개수 불러오기
-    public List<LikeCountResponse> getLikeCount() {
+    public ResponseEntity<List<LikeCountResponse>> getLikeCount() {
         List<LikeCountResponse> responseLikeCount = new ArrayList<>();
         for(Article article : likeService.findArticleLikeAll()) {
             responseLikeCount.add(new LikeCountResponse(article));
         }
-        return responseLikeCount;
+        return ResponseEntity.ok(responseLikeCount);
     }
 
     // 게시글 좋아요 개수 내림차순 정렬 조회(좋아요 많은거부터)
