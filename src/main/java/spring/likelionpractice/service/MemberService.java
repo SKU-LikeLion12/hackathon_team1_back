@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.Exception.DuplicatedException;
 import spring.likelionpractice.Exception.InvalidCredentialsException;
 import spring.likelionpractice.Exception.InvalidIdException;
+import spring.likelionpractice.Exception.InvalidIdPassword;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.MemberRepository;
 
@@ -28,7 +29,7 @@ public class MemberService {
         Member member = memberRepository.findByUserId(jwtUtility.validateToken(token).getSubject());
 
         if (member == null) {
-            throw new InvalidCredentialsException();
+            throw new InvalidIdException();
         }
         return member;
     }
@@ -37,7 +38,7 @@ public class MemberService {
     public Member changeInfo(String token, String name, String email, LocalDate noSmk, LocalDate startSmk,
                              int amountSmk, int price, int ciga, int tar, MultipartFile image) throws IOException {
         Member member = tokentoMember(token);
-        if (member == null) return null;
+        if (member == null) throw new InvalidIdException();
 
         byte[] images = null;
 
@@ -75,7 +76,7 @@ public class MemberService {
         if (member == null) {
             throw new InvalidIdException();
         }
-        return memberRepository.findById(id);
+        return member;
     }
 
     public String login(String userId, String password) {
@@ -83,7 +84,7 @@ public class MemberService {
         if(member != null && member.checkPassword(password)) {
             return jwtUtility.generateToken(member.getUserId());
         }
-        throw new InvalidCredentialsException();
+        throw new InvalidIdPassword();
     }
 
     public Member findByUserId(String userId) {

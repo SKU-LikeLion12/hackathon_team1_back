@@ -61,6 +61,9 @@ public class Article {
     }
 
     public String arrayToImage() {
+        if(this.articleImage == null) {
+            return null;
+        }
         return ImageUtility.encodeImage(this.articleImage);
     }
 }

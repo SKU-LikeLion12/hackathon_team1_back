@@ -13,8 +13,6 @@ public class CommentDTO {
         private Long articleId;
         @Schema(description = "댓글 내용", example = "댓글입니다.")
         private String content;
-        @Schema(description = "로그인시 토큰", example = "HYKCJMINCWJ42")
-        private String token;
     }
 
     @Data
@@ -23,14 +21,10 @@ public class CommentDTO {
         private String content;
         @Schema(description = "댓글 Id(primary key)", example = "1")
         private Long commentId;
-        @Schema(description = "로그인시 토큰", example = "HYKCJMINCWJ42")
-        private String token;
     }
 
     @Data
     public static class CommentDeleteRequest {
-        @Schema(description = "로그인시 토큰", example = "HYKCJMINCWJ42")
-        private String token;
         @Schema(description = "댓글 Id(primary key)", example = "1")
         private Long commentId;
     }

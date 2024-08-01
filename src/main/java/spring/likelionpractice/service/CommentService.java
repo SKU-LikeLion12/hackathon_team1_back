@@ -57,6 +57,10 @@ public class CommentService {
             throw new InvalidCredentialsException();
         }
 
+        if(comment == null) {
+            throw new InvalidIdException();
+        }
+
         if(member == comment.getWriter()) { commentRepository.deleteComment(comment); return true; }
         else return false;
     }
@@ -70,6 +74,11 @@ public class CommentService {
         }
 
         Comment comment = commentRepository.findById(commentId);
+
+        if (comment == null) {
+            throw new InvalidIdException();
+        }
+
         if (member == comment.getWriter()) {
             comment.updateComment(content);
         }

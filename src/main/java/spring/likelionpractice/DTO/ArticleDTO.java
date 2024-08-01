@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import spring.likelionpractice.domain.Article;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -52,13 +53,33 @@ public class ArticleDTO {
         private String title;
         @Schema(description = "내용", example = "게시물 내용입니다.")
         private String content;
-        @Schema(description = "로그인시 토큰", example = "HYKCJMINCWJ42")
-        private String token;
     }
 
     @Data
     public static class deleteArticle {
         @Schema(description = "로그인시 토큰", example = "HYKCJMINCWJ42")
         private String token;
+    }
+
+    @Data
+    public static class ResponseArticleList {
+        @Schema(description = "제목", example = "게시물 제목입니다.")
+        private String title;
+        @Schema(description = "내용", example = "게시물 내용입니다.")
+        private String content;
+        @Schema(description = "작성자", example = "qwer1234")
+        private String writer;
+        @Schema(description = "작성시간", example = "2024-04-04")
+        private LocalDateTime createDate;
+        @Schema(description = "게시물 좋아요 수", example = "3")
+        private Long likeCount;
+
+        public ResponseArticleList(Article article) {
+            this.title = article.getTitle();
+            this.content = article.getContent();
+            this.writer = article.getWriter().getName();
+            this.createDate = article.getCreateDate();
+            this.likeCount = article.getLikeCount();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package spring.likelionpractice.DTO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import spring.likelionpractice.domain.Article;
@@ -9,8 +10,6 @@ public class LikeDTO {
     public static class LikeRequest {
         @Schema(description = "게시물 id(primary key)", example = "1")
         private Long articleId;
-        @Schema(description = "로그인 시 토큰(게시물 좋아요를 누르기 위해선 로그인을 해야함)", example = "ASDUKSDJCMMWK43")
-        private String token;
     }
 
     @Data
@@ -35,6 +34,16 @@ public class LikeDTO {
 
         public LikeResponse(boolean liked, Long likeCount) {
             this.liked = liked;
+            this.likeCount = likeCount;
+        }
+    }
+
+    @Data
+    public static class CountResponse {
+        @Schema(description = "좋아요 개수", example = "3")
+        private Long likeCount;
+
+        public CountResponse(Long likeCount) {
             this.likeCount = likeCount;
         }
     }

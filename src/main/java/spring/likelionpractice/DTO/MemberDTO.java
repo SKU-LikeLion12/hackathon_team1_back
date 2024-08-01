@@ -46,8 +46,6 @@ public class MemberDTO {
 
     @Data
     public static class MemberUpdateRequest {
-        @Schema(description = "토큰", example = "UASNDK2353452~~")
-        private String token;
         @Schema(description = "이름", example = "홍길동")
         private String name;
         @Schema(description = "이메일", example = "qwer@naver.com")
