@@ -1,7 +1,10 @@
 package spring.likelionpractice.service;
 
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.stereotype.Service;
+import spring.likelionpractice.Exception.*;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
@@ -29,13 +32,10 @@ public class JwtUtility {
                     .getBody();
 
             return claims;
-        } catch (SignatureException ex) {
-            System.out.println("Invalid JWT signature");
-        } catch (ExpiredJwtException ex) {
-            System.out.println("Expired JWT token");
-        } catch (Exception ex) {
-            System.out.println("Invalid JWT token");
+        } catch (SignatureException e) {
+            throw new CustomSignatureException("Invalid JWT signature");
+        } catch (ExpiredJwtException e) {
+            throw new CustomExpiredJwtException("Expired JWT token");
         }
-        return null;
     }
 }

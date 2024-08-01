@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.likelionpractice.Exception.InvalidCredentialsException;
+import spring.likelionpractice.Exception.InvalidIdException;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.domain.Comment;
 import spring.likelionpractice.domain.Member;
@@ -24,8 +26,19 @@ public class CommentService {
     @Transactional
     public Comment saveComment(String token, Long article_id, String content) {
         Member member = memberService.tokentoMember(token);
+
+        if (member == null) {
+            throw new InvalidCredentialsException();
+        }
+
         Article article = articleService.findArticle(article_id);
+
+        if (article == null) {
+            throw new InvalidIdException();
+        }
+
         Comment comment = new Comment(member, article, content);
+        commentRepository.saveComment(comment);
         return comment;
     }
 
@@ -39,6 +52,15 @@ public class CommentService {
     public boolean deleteComment(Long commentId, String token) {
         Comment comment = commentRepository.findById(commentId);
         Member member = memberService.tokentoMember(token);
+
+        if(member == null) {
+            throw new InvalidCredentialsException();
+        }
+
+        if(comment == null) {
+            throw new InvalidIdException();
+        }
+
         if(member == comment.getWriter()) { commentRepository.deleteComment(comment); return true; }
         else return false;
     }
@@ -46,7 +68,17 @@ public class CommentService {
     @Transactional
     public Comment updateComment(Long commentId, String token, String content) {
         Member member = memberService.tokentoMember(token);
+
+        if (member == null) {
+            throw new InvalidCredentialsException();
+        }
+
         Comment comment = commentRepository.findById(commentId);
+
+        if (comment == null) {
+            throw new InvalidIdException();
+        }
+
         if (member == comment.getWriter()) {
             comment.updateComment(content);
         }

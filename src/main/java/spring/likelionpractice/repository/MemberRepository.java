@@ -11,9 +11,13 @@ public interface MemberRepository {
 
     Member findByUserId(String userId);
 
+    Member findByEmail(String email);
+
     List<Member> findAll();
 
     void deleteMember(Member member);
+
+    Member findByUserIdAndEmail(String userId, String email);
 
     List<Member> findByName(String name);
 }
