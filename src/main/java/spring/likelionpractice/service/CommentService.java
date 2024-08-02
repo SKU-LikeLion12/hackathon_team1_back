@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.likelionpractice.Exception.InvalidCommentException;
 import spring.likelionpractice.Exception.InvalidCredentialsException;
 import spring.likelionpractice.Exception.InvalidIdException;
 import spring.likelionpractice.domain.Article;
@@ -76,7 +77,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId);
 
         if (comment == null) {
-            throw new InvalidIdException();
+            throw new InvalidCommentException();
         }
 
         if (member == comment.getWriter()) {

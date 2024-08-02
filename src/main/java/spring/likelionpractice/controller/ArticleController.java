@@ -25,7 +25,7 @@ public class ArticleController {
 
     @Operation(summary = "게시물 조회", description = "id로 조회", tags = "Article",
                 responses = {@ApiResponse(responseCode = "200", description = "게시물 조회"),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾지 못했습니다.")})
+                            @ApiResponse(responseCode = "404", description = "게시물을 찾지 못했습니다.")})
     @GetMapping("/article/{id}")
     public ResponseEntity<ResponseArticle> getArticle(@PathVariable("id") Long id) {
         Article article = articleService.findArticle(id);
@@ -62,7 +62,7 @@ public class ArticleController {
 
     @Operation(summary = "게시물 삭제", description = "header에 Bearer 토큰 필요", tags = "Article",
                 responses = {@ApiResponse(responseCode = "200", description = "게시물 삭제"),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾지 못했습니다.")})
+                            @ApiResponse(responseCode = "409", description = "게시물을 찾지 못했습니다.")})
     @DeleteMapping("/article/{id}")
     public ResponseEntity<String> deleteArticle(@RequestHeader("Authorization") String BearerToken, @PathVariable("id") Long id) {
         String token = BearerToken.replace("Bearer", "");

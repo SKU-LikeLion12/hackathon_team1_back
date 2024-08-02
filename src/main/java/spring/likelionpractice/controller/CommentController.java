@@ -30,7 +30,7 @@ public class CommentController {
 
     @Operation(summary = "게시물에 대한 내가 쓴 댓글 수정", description = "header에 bearer 토큰 필요, 댓글 수정(content, commentId 필요)", tags = "Comment",
                 responses = {@ApiResponse(responseCode = "200", description = "댓글 수정"),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾지 못하였습니다.")})
+                            @ApiResponse(responseCode = "400", description = "댓글을 찾지 못하였습니다.")})
     @PutMapping("/comment")
     public ResponseEntity<CommentResponse> updateComment(@RequestHeader("Authorization") String BearerToken, @RequestBody CommentUpdateRequest request) {
         String token = BearerToken.replace("Bearer", "");
@@ -40,7 +40,7 @@ public class CommentController {
 
     @Operation(summary = "게시물에 대한 내가 쓴 댓글 삭제", description = "Authorization Bearer 토큰 필요 댓글 삭제(commentId 필요)", tags = "Comment",
                 responses = {@ApiResponse(responseCode = "200", description = "댓글이 삭제되었습니다."),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾지 못하였습니다.")})
+                            @ApiResponse(responseCode = "400", description = "댓글을 찾지 못하였습니다.")})
     @DeleteMapping("/comment")
     public ResponseEntity<String> deleteComment(@RequestHeader("Authorization") String BearerToken, @RequestBody CommentDeleteRequest request) {
         String token = BearerToken.replace("Bearer", "");

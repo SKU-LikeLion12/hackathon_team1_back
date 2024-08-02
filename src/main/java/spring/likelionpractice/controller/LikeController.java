@@ -25,7 +25,7 @@ public class LikeController {
 
     @Operation(summary = "로그인한 후 게시물에 대한 좋아요", description = "header에 Bearer 토큰 필요, 게시물에 대한 id 필요", tags = "like",
                 responses = {@ApiResponse(responseCode = "200", description = "게시물 좋아요 + 1, 다시 누르면 -1"),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾을 수 없습니다.")})
+                            @ApiResponse(responseCode = "400", description = "게시물을 찾을 수 없습니다.")})
     @PostMapping("/like/{id}")       // 유저당 게시글에 좋아요 1개(한번 더 누르면 좋아요 취소)
     public ResponseEntity<LikeResponse> like(@RequestHeader("Authorization") String BearerToken, @PathVariable Long id) {
         String token = BearerToken.replace("Bearer", "");
@@ -38,7 +38,7 @@ public class LikeController {
 
     @Operation(summary = "해당 게시글의 좋아요 개수", description = "게시글에 대한 id 필요", tags = "like",
                 responses = {@ApiResponse(responseCode = "200", description = "게시물 좋아요 개수"),
-                            @ApiResponse(responseCode = "400", description = "Id를 찾지 못했습니다.")})
+                            @ApiResponse(responseCode = "404", description = "게시물을 찾지 못했습니다.")})
     @GetMapping("/like/{id}")       // 게시글 하나 불러올 때 해당 게시글의 좋아요 개수 불러오기
     public ResponseEntity<CountResponse> getLike(@PathVariable Long id) {
         Long likeCount = likeService.findByArticleIdLikeCount(id);

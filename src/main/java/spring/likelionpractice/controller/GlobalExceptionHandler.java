@@ -14,16 +14,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("유효하지 않은 토큰입니다.");
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾을 수 없습니다.");
-    }
-
-    @ExceptionHandler(UnAuthrizedException.class)
-    public ResponseEntity<String> handleUnAuthrizedException(UnAuthrizedException e) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
-    }
-
     @ExceptionHandler(InvalidIdException.class)
     public ResponseEntity<String> handleInvalidIdException(InvalidIdException e) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id를 찾지 못했습니다.");
@@ -31,7 +21,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidArticleNotFound.class)
     public ResponseEntity<String> handleInvalidArticleNotFound(InvalidArticleNotFound e) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("찾지 못했습니다.");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("게시물을 찾지 못했습니다.");
     }
 
     @ExceptionHandler(DuplicatedException.class)
@@ -54,4 +44,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("아이디 또는 패스워드가 잘못되었습니다.");
     }
 
+    @ExceptionHandler(InvalidCommentException.class)
+    public ResponseEntity<String> handleInvalidCommentException(InvalidCommentException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("댓글을 찾지 못했습니다.");
+    }
 }
