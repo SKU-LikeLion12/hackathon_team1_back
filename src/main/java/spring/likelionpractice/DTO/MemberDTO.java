@@ -99,4 +99,10 @@ public class MemberDTO {
         @Schema(description = "토큰", example = "AUNKEWOCJSK53432")
         private String token;
     }
+
+    @Data
+    public static class EmailRequest {
+        @Schema(description = "이메일 주소", example = "qwer@naver.com")
+        private String email;
+    }
 }

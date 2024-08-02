@@ -7,6 +7,7 @@ import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.resource.beans.internal.BeansMessageLogger_$logger;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -51,21 +52,21 @@ public class MemberController {
     }
 
     @Operation(summary = "아이디 중복 조회", description = "아이디 입력하고 중복확인 눌렀을때", tags = "Check",
-                responses = {@ApiResponse(responseCode = "200", description = "사용 가능한 아이디입니다, 이미 존재하는 아이디입니다.")})
+                responses = {@ApiResponse(responseCode = "200", description = "true : 사용 가능한 아이디입니다, false : 이미 존재하는 아이디입니다.")})
     @GetMapping("/member/id/{idCheck}")
-    public String idCheck(@Parameter(description = "사용자 아이디", example = "likeLion12")@PathVariable String idCheck) {
+    public ResponseEntity<Boolean> idCheck(@Parameter(description = "사용자 아이디", example = "likeLion12")@PathVariable String idCheck) {
         Member member = memberRepository.findByUserId(idCheck);
-        if(member != null) return "이미 존재하는 아이디입니다.";
-        return "사용 가능한 아이디입니다.";
+        if(member != null) return ResponseEntity.ok(false);
+        return ResponseEntity.ok(true);
     }
 
     @Operation(summary = "이메일 중복 조회", description = "emailCheck 이메일 중복 확인", tags = "Check",
-                responses = {@ApiResponse(responseCode = "200", description = "사용 가능한 이메일입니다, 이미 존재하는 이메일입니다.")})
+                responses = {@ApiResponse(responseCode = "200", description = "true : 사용 가능한 이메일입니다, false : 이미 존재하는 이메일입니다.")})
     @GetMapping("/member/email/{emailCheck}")
-    public String emailCheck(@Parameter(description = "사용자 이메일", example = "likelion12@naver.com")@PathVariable String emailCheck) {
+    public ResponseEntity<Boolean> emailCheck(@Parameter(description = "사용자 이메일", example = "likelion12@naver.com")@PathVariable String emailCheck) {
         Member member = memberRepository.findByEmail(emailCheck);
-        if(member != null) return "이미 존재하는 이메일입니다.";
-        return "사용 가능한 이메일입니다.";
+        if(member != null) return ResponseEntity.ok(false);
+        return ResponseEntity.ok(true);
     }
 
     @Operation(summary = "로그인", description = "회원가입 후 아이디, 패스워드 입력 후 로그인(로그인 성공 시 토큰 생성)", tags = "login",
@@ -77,27 +78,24 @@ public class MemberController {
         return ResponseEntity.ok(new LoginResponse(token));
     }
 
-    @Operation(summary = "비밀번호 초기화하기전", description = "userId, email 확인", tags = "member")
+    @Operation(summary = "임시 비밀번호 초기화", description = "userId, email 확인", tags = "member",
+            responses = {@ApiResponse(responseCode = "200", description = "임시 비밀번호 해당 이메일에 전송"),
+                        @ApiResponse(responseCode = "400", description = "아이디 또는 비밀번호가 잘못되었습니다")})
     @PostMapping("/member/findPassword")
-    public String findPassword(@RequestParam String userId,@RequestParam String email, HttpSession session) {
+    public ResponseEntity<String> findPassword(@RequestParam String userId,@RequestParam String email) {
         Member member = memberRepository.findByUserIdAndEmail(userId, email);
-        if(member == null) return "아이디 또는 이메일이 잘못되었습니다.";
-        session.setAttribute("resetPasswordMemberId", member.getId());
-        return "redirect:/member/resetPassword";
-    }
+        if(member == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("아이디 또는 이메일이 잘못되었습니다.");
 
-    @Operation(summary = "비밀번호 초기화", description = "새로운 password 생성", tags = "member")
-    @PostMapping("/member/resetPassword")
-    public ResponseEntity<?> resetPassword(@RequestParam String password, HttpSession session) {
-        Long memberId = (Long) session.getAttribute("resetPasswordMemberId");
-        if (memberId == null) {
-            return ResponseEntity.ok("비밀번호 찾기 절차를 다시 수행해주세요");
-        }
-        Member member = memberRepository.findById(memberId);
+        String password = mailService.tmpPassword();
         member.setPassword(password);
-        memberRepository.save(member);
-        session.removeAttribute("resetPasswordMemberId");
-        return ResponseEntity.ok("비밀번호가 성공적으로 재설정되었습니다.");
+
+        try {
+            mailService.sendTmpMail(email, password);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("임시 비밀번호 생성에 실패하였습니다.");
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("임시 비밀번호가 이메일로 전송되었습니다.");
     }
 
     @Operation(summary = "회원 탈퇴", description = "header 에 bearer 토큰 설정", tags = "member",
@@ -182,18 +180,22 @@ public class MemberController {
     @Operation(summary = "이메일 인증 문자 보내기", description = "회원가입시 하나의 이메일만 저장가능(mail)", tags = "email",
                 responses = {@ApiResponse(responseCode = "200", description = "이메일로 인증번호를 보냈습니다.")})
     @PostMapping("/mailSend")
-    public ResponseEntity<String> mailSend(@RequestParam String mail) throws MessagingException, UnsupportedEncodingException {
-        mailService.sendMail(mail);
+    public ResponseEntity<String> mailSend(@RequestBody EmailRequest email) throws MessagingException, UnsupportedEncodingException {
+        mailService.sendMail(email.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body("이메일로 인증번호를 보냈습니다.");
     }
 
     // 아직 여기 수정
-    @Operation(summary = "인증번호 검증", description = "회원가입시 인증번호 맞는지 안맞는지(userNumber)", tags = "email",
-                responses = {@ApiResponse(responseCode = "200", description = "")})
+    @Operation(summary = "인증번호 검증", description = "회원가입시 인증번호 맞는지 안맞는지(email ,userNumber)", tags = "email",
+                responses = {@ApiResponse(responseCode = "200", description = "인증이 성공했습니다, 인증이 실패했습니다.")})
     @GetMapping("/mailCheck")
-    public ResponseEntity<?> mailCheck(@RequestParam String userNumber) {
-        boolean isMatch = userNumber.equals(String.valueOf(number));
+    public ResponseEntity<?> mailCheck(@RequestParam String email, @RequestParam String userNumber) {
+        boolean isMatch = mailService.verifyCode(email, userNumber);
 
-        return ResponseEntity.ok(isMatch);
+        if(isMatch) {
+            return ResponseEntity.ok("인증이 성공했습니다.");
+        } else {
+            return ResponseEntity.ok("인증이 실패했습니다.");
+        }
     }
 }
