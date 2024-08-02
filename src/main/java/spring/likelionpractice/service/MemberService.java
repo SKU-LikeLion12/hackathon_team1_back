@@ -66,7 +66,8 @@ public class MemberService {
                          LocalDate noSmk, LocalDate startSmk, int amountSmk,
                          int price, int ciga, int tar) {
         Member member = memberRepository.findByUserId(userId);
-        if(member != null) throw new DuplicatedException();
+        Member mail = memberRepository.findByEmail(email);
+        if(member != null || mail != null) throw new DuplicatedException();
         return memberRepository.save(new Member(userId, password, name, email, noSmk, startSmk, amountSmk, price, ciga, tar));
     }
 

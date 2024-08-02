@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.likelionpractice.Exception.MailSendException;
 
 import java.io.UnsupportedEncodingException;
 
@@ -19,7 +20,7 @@ public class MailService {
 
     // 난수 생성
     public static void createNumber() {
-        number = (int)(Math.random() * (999999)) + 9000000;
+        number = (int)(Math.random() * (90000)) + 100000;
     }
 
     @Transactional
@@ -37,7 +38,7 @@ public class MailService {
 
             mimeMessage.setText(body, "utf-8", "html");      // 위 html 코드를 이메일로 보냄
         } catch (MessagingException e) {
-            e.printStackTrace();
+            throw new MailSendException();
         }
 
         return mimeMessage;

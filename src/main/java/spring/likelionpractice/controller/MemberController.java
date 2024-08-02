@@ -40,13 +40,12 @@ public class MemberController {
     // 프론트에서 form-data notnull 처리
     @Operation(summary = "회원가입", description = "아이디, 비밀번호, 이름, 이메일, 금연시작 날짜, 흡연시작 날짜, 하루 흡연량, 담배 가격, 피는 담배 한갑에 있는 개수, 담배 타르양", tags = "member",
                 responses = {@ApiResponse(responseCode = "200", description = "로그인 성공 후 토큰 반환"),
-                            @ApiResponse(responseCode = "400", description = "이미 존재하는 아이디이거나 이메일입니다.")})
+                            @ApiResponse(responseCode = "400", description = "아이디 또는 이메일이 중복되었습니다.")})
     @PostMapping("/member/add")
     public ResponseEntity<String> signUp(@RequestBody MemberCreateRequest request) {
-        Member member = memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getEmail(),
+        memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getEmail(),
                 request.getNoSmk(), request.getStartSmk(), request.getAmountSmk(),
                 request.getPrice(), request.getCiga(), request.getTar());
-        if (member == null) return ResponseEntity.status(HttpStatus.FORBIDDEN).body("이미 존재하는 아이디이거나 이메일입니다.");
         String token = memberService.login(request.getUserId(), request.getPassword());
         return ResponseEntity.status(HttpStatus.CREATED).body(token);
     }
@@ -71,7 +70,7 @@ public class MemberController {
 
     @Operation(summary = "로그인", description = "회원가입 후 아이디, 패스워드 입력 후 로그인(로그인 성공 시 토큰 생성)", tags = "login",
             responses = {@ApiResponse(responseCode = "200", description = "토큰 반환"),
-                    @ApiResponse(responseCode = "400", description = "Id 찾지 못했습니다.")})
+                    @ApiResponse(responseCode = "400", description = "Id 또는 패스워드가 잘못되었습니다.")})
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberLoginRequest request) {
         String token = memberService.login(request.getUserId(), request.getPassword());

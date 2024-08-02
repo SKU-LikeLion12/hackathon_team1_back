@@ -26,7 +26,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DuplicatedException.class)
     public ResponseEntity<String> handleDuplicatedException(DuplicatedException e) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("중복 되었습니다.");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("아이디 또는 이메일이 중복 되었습니다.");
     }
 
     @ExceptionHandler(CustomSignatureException.class)
@@ -48,4 +48,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleInvalidCommentException(InvalidCommentException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("댓글을 찾지 못했습니다.");
     }
+
+    @ExceptionHandler(MailSendException.class)
+    public ResponseEntity<String> handleMailSendException(MailSendException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("메일을 보내지 못했습니다.");
+    }
+
 }
