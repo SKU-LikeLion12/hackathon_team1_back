@@ -69,6 +69,16 @@ public class MemberController {
         return ResponseEntity.ok(true);
     }
 
+    @Operation(summary = "아이디 찾기", description = "아이디 찾기 화면", tags = "member",
+                responses = {@ApiResponse(responseCode = "200", description = "등록된 회원 아이디 출력"),
+                            @ApiResponse(responseCode = "404", description = "false (이름과 이메일을 잘못 입력하였습니다.)")})
+    @PostMapping("/member/idFind")
+    public ResponseEntity<?> idFind(@RequestBody IdFindRequest request) {
+        Member member = memberRepository.findByNameEmail(request.getName(), request.getEmail());
+        if(member == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+        return ResponseEntity.ok(member.getUserId());
+    }
+
     @Operation(summary = "로그인", description = "회원가입 후 아이디, 패스워드 입력 후 로그인(로그인 성공 시 토큰 생성)", tags = "login",
             responses = {@ApiResponse(responseCode = "200", description = "토큰 반환"),
                     @ApiResponse(responseCode = "400", description = "Id 또는 패스워드가 잘못되었습니다.")})

@@ -105,4 +105,12 @@ public class MemberDTO {
         @Schema(description = "이메일 주소", example = "qwer@naver.com")
         private String email;
     }
+
+    @Data
+    public static class IdFindRequest {
+        @Schema(description = "이름", example = "홍길동")
+        private String name;
+        @Schema(description = "이메일 주소", example = "qwer@naver.com")
+        private String email;
+    }
 }
