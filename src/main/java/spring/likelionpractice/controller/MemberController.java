@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.DTO.MemberDTO.*;
 import spring.likelionpractice.Exception.InvalidCredentialsException;
+import spring.likelionpractice.Exception.MailSendException;
 import spring.likelionpractice.domain.Member;
 import spring.likelionpractice.repository.MemberRepository;
 import spring.likelionpractice.service.ImageUtility;
@@ -36,7 +37,6 @@ public class MemberController {
     private final MemberRepository memberRepository;
     private final MemberService memberService;
     private int number;
-
 
     // 프론트에서 form-data notnull 처리
     @Operation(summary = "회원가입", description = "아이디, 비밀번호, 이름, 이메일, 금연시작 날짜, 흡연시작 날짜, 하루 흡연량, 담배 가격, 피는 담배 한갑에 있는 개수, 담배 타르양", tags = "member",
@@ -79,12 +79,12 @@ public class MemberController {
     }
 
     @Operation(summary = "임시 비밀번호 초기화", description = "userId, email 확인", tags = "member",
-            responses = {@ApiResponse(responseCode = "200", description = "임시 비밀번호 해당 이메일에 전송"),
-                        @ApiResponse(responseCode = "400", description = "아이디 또는 비밀번호가 잘못되었습니다")})
+            responses = {@ApiResponse(responseCode = "200", description = "임시 비밀번호 해당 이메일에 전송, true"),
+                        @ApiResponse(responseCode = "400", description = "아이디 또는 비밀번호가 잘못되었습니다, false")})
     @PostMapping("/member/findPassword")
-    public ResponseEntity<String> findPassword(@RequestParam String userId,@RequestParam String email) {
+    public ResponseEntity<Boolean> findPassword(@RequestParam String userId,@RequestParam String email) {
         Member member = memberRepository.findByUserIdAndEmail(userId, email);
-        if(member == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("아이디 또는 이메일이 잘못되었습니다.");
+        if(member == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         String password = mailService.tmpPassword();
         member.setPassword(password);
@@ -92,10 +92,10 @@ public class MemberController {
         try {
             mailService.sendTmpMail(email, password);
         } catch (MessagingException | UnsupportedEncodingException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("임시 비밀번호 생성에 실패하였습니다.");
+            throw new MailSendException();
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body("임시 비밀번호가 이메일로 전송되었습니다.");
+        return ResponseEntity.ok(true);
     }
 
     @Operation(summary = "회원 탈퇴", description = "header 에 bearer 토큰 설정", tags = "member",

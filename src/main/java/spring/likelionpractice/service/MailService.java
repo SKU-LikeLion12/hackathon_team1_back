@@ -75,7 +75,7 @@ public class MailService {
             body += "<h3>" + "요청하신 인증 번호입니다." + "<h3>";
             body += "<h1>" + verificationCode + "</h1>";
 
-            mimeMessage.setText(body, "utf-8", "html");      // 위 html 코드를 이메일로 보냄
+            mimeMessage.setText(body, "utf-8", "html");
         } catch (MessagingException e) {
             throw new MailSendException();
         }
