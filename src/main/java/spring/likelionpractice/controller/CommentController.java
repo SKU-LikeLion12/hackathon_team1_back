@@ -39,13 +39,13 @@ public class CommentController {
     }
 
     @Operation(summary = "게시물에 대한 내가 쓴 댓글 삭제", description = "Authorization Bearer 토큰 필요 댓글 삭제(commentId 필요)", tags = "Comment",
-                responses = {@ApiResponse(responseCode = "200", description = "댓글이 삭제되었습니다."),
+                responses = {@ApiResponse(responseCode = "204", description = "댓글 삭제(true)"),
                             @ApiResponse(responseCode = "400", description = "댓글을 찾지 못하였습니다.")})
     @DeleteMapping("/comment")
-    public ResponseEntity<String> deleteComment(@RequestHeader("Authorization") String BearerToken, @RequestBody CommentDeleteRequest request) {
+    public ResponseEntity<Boolean> deleteComment(@RequestHeader("Authorization") String BearerToken, @RequestBody CommentDeleteRequest request) {
         String token = BearerToken.replace("Bearer", "");
         commentService.deleteComment(request.getCommentId(), token);
-        return ResponseEntity.ok("댓글이 삭제되었습니다.");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(true);
     }
 
     @Operation(summary = "게시물에 대한 댓글 조회", description = "게시물에 대한 댓글 조회(articleId 필요)", tags = "Comment",
@@ -58,6 +58,4 @@ public class CommentController {
         }
         return ResponseEntity.ok(responseComment);
     }
-
-
 }
