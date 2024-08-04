@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/springpr?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/hackathon1team?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: tjddbs
     driver-class-name: com.mysql.cj.jdbc.Driver
