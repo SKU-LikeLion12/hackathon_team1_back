@@ -122,14 +122,25 @@ public class MemberController {
     @Operation(summary = "회원 정보 수정", description = "로그인 성공 후 회원 정보 수정(이름, 금연시작일시, 흡연 시작일시, 하루 흡연량, 담배가격, 담배 한 갑당 개비수, 타르(담배), 회원 사진", tags = "member",
                 responses = {@ApiResponse(responseCode = "200", description = "수정된 정보 출력")})
     @PutMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> changeMemberInfo(@RequestHeader("Authorization") String bearerToken, @RequestPart MemberUpdateRequest request, @RequestPart(required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<?> changeMemberInfo(@RequestHeader("Authorization") String bearerToken, @RequestPart MemberUpdateRequest request) throws IOException {
         String token = bearerToken.replace("Bearer", "");
         Member findMember = memberService.changeInfo(token, request.getName(), request.getEmail(), request.getNoSmk(),
                 request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
-                request.getTar(), image);
+                request.getTar(), request.getImage());
         String encodeImage = ImageUtility.encodeImage(findMember.getImage());
         return ResponseEntity.ok(new MemberUpdateResponse(findMember.getName(), findMember.getEmail(), findMember.getNoSmk(),
                 findMember.getStartSmk(), findMember.getAmountSmk(), findMember.getPrice(), findMember.getCiga(), request.getTar(), encodeImage));
+    }
+
+    @Operation(summary = "마이페이지 조회", description = "Authorization Bearer 토큰 필요,", tags = "detail",
+                responses = {@ApiResponse(responseCode = "200", description = "마이페이지 정보 출력"),
+                            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰")})
+    @GetMapping(value = "/member/detail")
+    public ResponseEntity<MemberUpdateResponse> memberDetail(@RequestHeader("Authorization") String bearerToken) {
+        String token = bearerToken.replace("Bearer", "");
+        Member member = memberService.tokentoMember(token);
+
+        return ResponseEntity.ok(new MemberUpdateResponse(member));
     }
 
     @Operation(summary = "메인화면 홈", description = "Authorization Bearer 토큰 필요, 로그인 성공 후 메인화면 페이지(내 현황(피우지않은 담배 개수(개), 절약한 금액(원), 늘어난 수명(분)), 흡연정보(총 흡연기간(일), 소비한 금액(원), 삼킨 타르 양(mg))", tags = "main",
@@ -147,7 +158,7 @@ public class MemberController {
         list.add(memberService.calcLife(member));
         list.add(memberService.sumSmokedDate(member));
         list.add(memberService.sumMoney(member));
-        list.add( memberService.sumTar(member));
+        list.add(memberService.sumTar(member));
 
         return ResponseEntity.ok(list);
     }

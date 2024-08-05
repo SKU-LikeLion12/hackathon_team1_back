@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import spring.likelionpractice.domain.Member;
 
 import java.time.LocalDate;
 
@@ -62,6 +64,8 @@ public class MemberDTO {
         private int ciga;
         @Schema(description = "타르 양", example = "4")
         private int tar;
+        @Schema(description = "유저 이미지", example = "12312435")
+        private MultipartFile image;
     }
 
     @AllArgsConstructor
@@ -85,6 +89,18 @@ public class MemberDTO {
         private int tar;
         @Schema(description = "프로필 이미지", example = "ASUADS43423")
         private String image;
+
+        public MemberUpdateResponse(Member member) {
+            name = member.getName();
+            email = member.getEmail();
+            noSmk = member.getNoSmk();
+            startSmk = member.getStartSmk();
+            amountSmk = member.getAmountSmk();
+            price = member.getPrice();
+            ciga = member.getCiga();
+            tar = member.getTar();
+            image = member.arrayToImage();
+        }
     }
 
     @Data

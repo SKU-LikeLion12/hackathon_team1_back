@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import spring.likelionpractice.service.ImageUtility;
 
 import java.time.LocalDate;
 
@@ -62,6 +63,13 @@ public class Member {
 
     public Member(byte[] image) {
         this.image = image;
+    }
+
+    public String arrayToImage() {
+        if (this.image == null) {
+            return null;
+        }
+        return ImageUtility.encodeImage(this.image);
     }
 
     private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
