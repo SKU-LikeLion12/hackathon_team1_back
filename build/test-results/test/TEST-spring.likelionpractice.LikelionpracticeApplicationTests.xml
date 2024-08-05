@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="spring.likelionpractice.LikelionpracticeApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-08-04T20:25:36" hostname="hwangseong-yun-ui-MacBookAir.local" time="0.261">
+<testsuite name="spring.likelionpractice.LikelionpracticeApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-08-05T09:10:05" hostname="hwangseong-yun-ui-MacBookAir.local" time="0.258">
   <properties/>
-  <testcase name="contextLoads()" classname="spring.likelionpractice.LikelionpracticeApplicationTests" time="0.261"/>
-  <system-out><![CDATA[05:25:34.344 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [spring.likelionpractice.LikelionpracticeApplicationTests]: LikelionpracticeApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-05:25:34.381 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration spring.likelionpractice.LikelionpracticeApplication for test class spring.likelionpractice.LikelionpracticeApplicationTests
+  <testcase name="contextLoads()" classname="spring.likelionpractice.LikelionpracticeApplicationTests" time="0.258"/>
+  <system-out><![CDATA[18:10:03.658 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [spring.likelionpractice.LikelionpracticeApplicationTests]: LikelionpracticeApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:10:03.697 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration spring.likelionpractice.LikelionpracticeApplication for test class spring.likelionpractice.LikelionpracticeApplicationTests
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -13,23 +13,23 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v3.2.2)
 
-2024-08-05T05:25:34.537+09:00  INFO 42735 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : Starting LikelionpracticeApplicationTests using Java 17.0.12 with PID 42735 (started by sungyoon in /Users/sungyoon/Desktop/hackathon)
-2024-08-05T05:25:34.538+09:00  INFO 42735 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : No active profile set, falling back to 1 default profile: "default"
-2024-08-05T05:25:34.825+09:00  INFO 42735 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2024-08-05T05:25:34.833+09:00  INFO 42735 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
-2024-08-05T05:25:35.005+09:00  INFO 42735 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2024-08-05T05:25:35.022+09:00  INFO 42735 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
-2024-08-05T05:25:35.034+09:00  INFO 42735 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2024-08-05T05:25:35.117+09:00  INFO 42735 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2024-08-05T05:25:35.126+09:00  INFO 42735 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2024-08-05T05:25:35.211+09:00  INFO 42735 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3fd33f48
-2024-08-05T05:25:35.212+09:00  INFO 42735 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2024-08-05T05:25:35.570+09:00  INFO 42735 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2024-08-05T18:10:03.849+09:00  INFO 46520 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : Starting LikelionpracticeApplicationTests using Java 17.0.12 with PID 46520 (started by sungyoon in /Users/sungyoon/Desktop/hackathon)
+2024-08-05T18:10:03.849+09:00  INFO 46520 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : No active profile set, falling back to 1 default profile: "default"
+2024-08-05T18:10:04.139+09:00  INFO 46520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2024-08-05T18:10:04.148+09:00  INFO 46520 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 6 ms. Found 0 JPA repository interfaces.
+2024-08-05T18:10:04.318+09:00  INFO 46520 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2024-08-05T18:10:04.335+09:00  INFO 46520 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.1.Final
+2024-08-05T18:10:04.345+09:00  INFO 46520 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2024-08-05T18:10:04.422+09:00  INFO 46520 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2024-08-05T18:10:04.431+09:00  INFO 46520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2024-08-05T18:10:04.513+09:00  INFO 46520 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e49437
+2024-08-05T18:10:04.514+09:00  INFO 46520 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2024-08-05T18:10:04.875+09:00  INFO 46520 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     alter table article 
        drop 
        foreign key FKnb2hbmy476nrjmhb5qa2j3gxl
-2024-08-05T05:25:35.602+09:00  WARN 42735 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2024-08-05T18:10:04.904+09:00  WARN 46520 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table article 
        drop 
        foreign key FKnb2hbmy476nrjmhb5qa2j3gxl" via JDBC [Table 'hackathon1team.article' doesn't exist]
@@ -184,7 +184,7 @@ Hibernate:
     alter table comment 
        drop 
        foreign key FK5yx0uphgjc6ik6hb82kkw501y
-2024-08-05T05:25:35.608+09:00  WARN 42735 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2024-08-05T18:10:04.909+09:00  WARN 46520 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table comment 
        drop 
        foreign key FK5yx0uphgjc6ik6hb82kkw501y" via JDBC [Table 'hackathon1team.comment' doesn't exist]
@@ -339,7 +339,7 @@ Hibernate:
     alter table comment 
        drop 
        foreign key FKjfdaen6h2c8o1axvh7j6go3rq
-2024-08-05T05:25:35.612+09:00  WARN 42735 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2024-08-05T18:10:04.913+09:00  WARN 46520 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table comment 
        drop 
        foreign key FKjfdaen6h2c8o1axvh7j6go3rq" via JDBC [Table 'hackathon1team.comment' doesn't exist]
@@ -494,7 +494,7 @@ Hibernate:
     alter table likes 
        drop 
        foreign key FK1hlv6urq91y6fqfg6bds5gvp9
-2024-08-05T05:25:35.616+09:00  WARN 42735 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2024-08-05T18:10:04.916+09:00  WARN 46520 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table likes 
        drop 
        foreign key FK1hlv6urq91y6fqfg6bds5gvp9" via JDBC [Table 'hackathon1team.likes' doesn't exist]
@@ -649,7 +649,7 @@ Hibernate:
     alter table likes 
        drop 
        foreign key FKa4vkf1skcfu5r6o5gfb5jf295
-2024-08-05T05:25:35.619+09:00  WARN 42735 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
+2024-08-05T18:10:04.920+09:00  WARN 46520 --- [    Test worker] o.h.t.s.i.ExceptionHandlerLoggedImpl     : GenerationTarget encountered exception accepting command : Error executing DDL "
     alter table likes 
        drop 
        foreign key FKa4vkf1skcfu5r6o5gfb5jf295" via JDBC [Table 'hackathon1team.likes' doesn't exist]
@@ -909,9 +909,9 @@ Hibernate:
        add constraint FKa4vkf1skcfu5r6o5gfb5jf295 
        foreign key (member_id) 
        references member (id)
-2024-08-05T05:25:35.737+09:00  INFO 42735 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2024-08-05T05:25:35.879+09:00  WARN 42735 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2024-08-05T05:25:36.081+09:00  INFO 42735 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : Started LikelionpracticeApplicationTests in 1.643 seconds (process running for 2.085)
+2024-08-05T18:10:05.057+09:00  INFO 46520 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2024-08-05T18:10:05.203+09:00  WARN 46520 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2024-08-05T18:10:05.415+09:00  INFO 46520 --- [    Test worker] s.l.LikelionpracticeApplicationTests     : Started LikelionpracticeApplicationTests in 1.662 seconds (process running for 2.108)
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

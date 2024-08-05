@@ -113,4 +113,12 @@ public class MemberDTO {
         @Schema(description = "이메일 주소", example = "qwer@naver.com")
         private String email;
     }
+
+    @Data
+    public static class PasswordFindRequest {
+        @Schema(description = "아이디", example = "qwer1234")
+        private String userId;
+        @Schema(description = "이메일", example = "qwer@naver.com")
+        private String email;
+    }
 }

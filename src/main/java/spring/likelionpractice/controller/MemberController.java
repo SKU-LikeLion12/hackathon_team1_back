@@ -40,15 +40,15 @@ public class MemberController {
 
     // 프론트에서 form-data notnull 처리
     @Operation(summary = "회원가입", description = "아이디, 비밀번호, 이름, 이메일, 금연시작 날짜, 흡연시작 날짜, 하루 흡연량, 담배 가격, 피는 담배 한갑에 있는 개수, 담배 타르양", tags = "member",
-                responses = {@ApiResponse(responseCode = "200", description = "로그인 성공 후 토큰 반환"),
+                responses = {@ApiResponse(responseCode = "201", description = "로그인 성공 후 토큰 반환"),
                             @ApiResponse(responseCode = "400", description = "아이디 또는 이메일이 중복되었습니다.")})
     @PostMapping("/member/add")
-    public ResponseEntity<String> signUp(@RequestBody MemberCreateRequest request) {
+    public ResponseEntity<?> signUp(@RequestBody MemberCreateRequest request) {
         memberService.signUp(request.getUserId(), request.getPassword(), request.getName(), request.getEmail(),
                 request.getNoSmk(), request.getStartSmk(), request.getAmountSmk(),
                 request.getPrice(), request.getCiga(), request.getTar());
         String token = memberService.login(request.getUserId(), request.getPassword());
-        return ResponseEntity.status(HttpStatus.CREATED).body(token);
+        return ResponseEntity.status(HttpStatus.CREATED).body(new LoginResponse(token));
     }
 
     @Operation(summary = "아이디 중복 조회", description = "아이디 입력하고 중복확인 눌렀을때", tags = "Check",
@@ -92,15 +92,15 @@ public class MemberController {
             responses = {@ApiResponse(responseCode = "200", description = "임시 비밀번호 해당 이메일에 전송, true"),
                         @ApiResponse(responseCode = "400", description = "아이디 또는 비밀번호가 잘못되었습니다, false")})
     @PostMapping("/member/findPassword")
-    public ResponseEntity<Boolean> findPassword(@RequestParam String userId,@RequestParam String email) {
-        Member member = memberRepository.findByUserIdAndEmail(userId, email);
+    public ResponseEntity<Boolean> findPassword(@RequestBody PasswordFindRequest request) {
+        Member member = memberRepository.findByUserIdAndEmail(request.getUserId(), request.getEmail());
         if(member == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
 
         String password = mailService.tmpPassword();
         member.setPassword(password);
 
         try {
-            mailService.sendTmpMail(email, password);
+            mailService.sendTmpMail(request.getEmail(), password);
         } catch (MessagingException | UnsupportedEncodingException e) {
             throw new MailSendException();
         }
