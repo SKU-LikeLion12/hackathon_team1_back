@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.domain.Article;
 
 import java.time.LocalDateTime;
@@ -16,6 +17,8 @@ public class ArticleDTO {
 
     @Data
     public static class ResponseArticle {
+        @Schema(description = "id", example = "게시물 아이디")
+        private Long id;
         @Schema(description = "제목", example = "게시물 제목입니다.")
         private String title;
         @Schema(description = "내용", example = "게시물 내용입니다.")
@@ -32,6 +35,7 @@ public class ArticleDTO {
         private String image;
 
         public ResponseArticle(Article article) {
+            this.id = article.getId();
             this.title = article.getTitle();
             this.content = article.getContent();
             this.writer = article.getWriter().getName();
@@ -63,6 +67,8 @@ public class ArticleDTO {
 
     @Data
     public static class ResponseArticleList {
+        @Schema(description = "아이디", example = "1")
+        private Long id;
         @Schema(description = "제목", example = "게시물 제목입니다.")
         private String title;
         @Schema(description = "내용", example = "게시물 내용입니다.")
@@ -75,11 +81,22 @@ public class ArticleDTO {
         private Long likeCount;
 
         public ResponseArticleList(Article article) {
+            this.id = article.getId();
             this.title = article.getTitle();
             this.content = article.getContent();
             this.writer = article.getWriter().getName();
             this.createDate = article.getCreateDate();
             this.likeCount = article.getLikeCount();
         }
+    }
+
+    @Data
+    public static class RequestImgArticle {
+        @Schema(description = "제목", example = "게시물 제목입니다.")
+        private String title;
+        @Schema(description = "내용", example = "게시물 내용입니다.")
+        private String content;
+        @Schema(description = "이미지", example = "이미지입니다.")
+        private MultipartFile image;
     }
 }

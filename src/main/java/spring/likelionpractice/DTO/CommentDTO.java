@@ -31,6 +31,8 @@ public class CommentDTO {
 
     @Data
     public static class CommentResponse {
+        @Schema(description = "댓글 아이디", example = "1")
+        private Long id;
         @Schema(description = "댓글 내용", example = "댓글 내용입니다.")
         private String content;
         @Schema(description = "댓글 생성 시간", example = "2024-04-22")
@@ -43,6 +45,7 @@ public class CommentDTO {
         private String writer_id;
 
         public CommentResponse(Comment comment) {
+            id = comment.getId();
             content = comment.getContent();
             createDate = comment.getCreatedDate();
             isUpdate = !comment.getCreatedDate().equals(comment.getUpdatedDate());

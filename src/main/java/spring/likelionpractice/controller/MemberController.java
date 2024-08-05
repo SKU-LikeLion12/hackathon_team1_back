@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
+import jakarta.websocket.OnError;
 import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.resource.beans.internal.BeansMessageLogger_$logger;
@@ -173,6 +174,30 @@ public class MemberController {
         int state = memberService.stateOfChange(member);
 
         return ResponseEntity.ok(state);
+    }
+
+    @Operation(summary = "담배 가격", description = "Authorization Bearer 토큰 필요, 담배 가격", tags = "detail",
+                responses = {@ApiResponse(responseCode = "200", description = "담배가격 출력"),
+                            @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다.")})
+    @GetMapping("/main/info/money")
+    public ResponseEntity<?> getCigaMoney(@RequestHeader("Authorization") String bearerToken) {
+        String token = bearerToken.replace("Bearer ", "");
+        Member member = memberService.tokentoMember(token);
+        int cigaMoney = member.getPrice();
+
+        return ResponseEntity.ok(cigaMoney);
+    }
+
+    @Operation(summary = "하루에 담배 피는 양", description = "Authorization Bearer 토큰 필요, 담배 피는 양", tags = "detail",
+                    responses = {@ApiResponse(responseCode = "200", description = "담배가격 출력"),
+                                @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다.")})
+    @GetMapping("/main/info/today")
+    public ResponseEntity<?> getToday(@RequestHeader("Authorization") String bearerToken) {
+        String token = bearerToken.replace("Bearer ", "");
+        Member member = memberService.tokentoMember(token);
+        int cigaToday = member.getCiga();
+
+        return ResponseEntity.ok(cigaToday);
     }
 
     @Operation(summary = "늘어난 수명", description = "Authorization Bearer 토큰 필요, 늘어난 수명 분으로 출력", tags = "detail",

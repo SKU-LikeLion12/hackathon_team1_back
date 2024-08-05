@@ -131,7 +131,7 @@ public class MemberService {
     public int calcLife(Member memberId) {             // 늘어난 수명 = (현재 날짜 - 금연시작 일시) * 하루 흡연량 * 11
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
-        return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * 1440 * 11);
+        return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * member.getCiga() * 11);
     }
     // 내 성과
 

@@ -36,14 +36,14 @@ public class ArticleController {
                 responses = {@ApiResponse(responseCode = "201", description = "게시물 생성"),
                             @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다.")})
     @PostMapping(value ="/article/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseArticle> addArticle(@RequestHeader("Authorization") String BearerToken, @RequestPart requestArticle request, @RequestPart(required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<ResponseArticle> addArticle(@RequestHeader("Authorization") String BearerToken, RequestImgArticle request) throws IOException {
         String token = BearerToken.replace("Bearer", "");
         String userId = jwtUtility.validateToken(token).getSubject();
 
         byte[] imageByte = null;
 
-        if (image != null && !image.isEmpty()) {
-            imageByte = image.getBytes();
+        if (request.getImage() != null && !request.getImage().isEmpty()) {
+            imageByte = request.getImage().getBytes();
         }
 
         Article article = articleService.saveNewArticle(userId, request.getTitle(), request.getContent(), imageByte);

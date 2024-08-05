@@ -51,11 +51,11 @@ public class CommentController {
     @Operation(summary = "게시물에 대한 댓글 조회", description = "게시물에 대한 댓글 조회(articleId 필요)", tags = "Comment",
                 responses = {@ApiResponse(responseCode = "200", description = "게시글에 대한 댓글 조회")})
     @GetMapping("/comment/article/{id}")
-    public ResponseEntity<List<CommentResponse>> articleComment(@PathVariable("id") Long articleId) {
+    public List<CommentResponse> articleComment(@PathVariable("id") Long articleId) {
         List<CommentResponse> responseComment = new ArrayList<>();
         for(Comment comment : commentService.articleToComment(articleId)) {
             responseComment.add(new CommentResponse(comment));
         }
-        return ResponseEntity.ok(responseComment);
+        return responseComment;
     }
 }
