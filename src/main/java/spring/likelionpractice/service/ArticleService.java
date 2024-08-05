@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import spring.likelionpractice.Exception.InvalidArticleNotFound;
 import spring.likelionpractice.Exception.InvalidCredentialsException;
 import spring.likelionpractice.Exception.InvalidIdException;
 import spring.likelionpractice.domain.Article;
@@ -65,7 +66,7 @@ public class ArticleService {
         }
 
         if (article == null) {
-            throw new InvalidIdException();
+            throw new InvalidArticleNotFound();
         }
         if (member == article.getWriter()) {
             articleRepository.deleteArticle(article);
@@ -76,7 +77,7 @@ public class ArticleService {
     public Article findArticle(Long articleId) {
         Article article = articleRepository.findById(articleId);
         if (article == null) {
-            throw new InvalidIdException();
+            throw new InvalidArticleNotFound();
         }
         return article;
     }

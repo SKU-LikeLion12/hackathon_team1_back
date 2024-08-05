@@ -66,7 +66,8 @@ public class MemberService {
                          LocalDate noSmk, LocalDate startSmk, int amountSmk,
                          int price, int ciga, int tar) {
         Member member = memberRepository.findByUserId(userId);
-        if(member != null) throw new DuplicatedException();
+        Member mail = memberRepository.findByEmail(email);
+        if(member != null || mail != null) throw new DuplicatedException();
         return memberRepository.save(new Member(userId, password, name, email, noSmk, startSmk, amountSmk, price, ciga, tar));
     }
 
@@ -130,7 +131,7 @@ public class MemberService {
     public int calcLife(Member memberId) {             // 늘어난 수명 = (현재 날짜 - 금연시작 일시) * 하루 흡연량 * 11
         Member member = findById(memberId.getId());
         LocalDate noSmkDay = member.getNoSmk();
-        return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * 1440 * 11);
+        return (int) (ChronoUnit.DAYS.between(noSmkDay, localDate) * member.getCiga() * 11);
     }
     // 내 성과
 

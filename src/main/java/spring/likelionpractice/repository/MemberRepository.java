@@ -11,6 +11,8 @@ public interface MemberRepository {
 
     Member findByUserId(String userId);
 
+    Member findByNameEmail(String name, String email);
+
     Member findByEmail(String email);
 
     List<Member> findAll();

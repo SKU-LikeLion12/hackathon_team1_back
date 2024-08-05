@@ -3,6 +3,7 @@ package spring.likelionpractice.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import spring.likelionpractice.Exception.InvalidArticleNotFound;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.domain.Like;
 import spring.likelionpractice.domain.Member;
@@ -45,6 +46,11 @@ public class LikeService {
     @Transactional
     public Long findByArticleIdLikeCount(Long articleId) {
         Article article = articleService.findArticle(articleId);
+
+        if (article == null) {
+            throw new InvalidArticleNotFound();
+        }
+
         return article.getLikeCount();
     }
 

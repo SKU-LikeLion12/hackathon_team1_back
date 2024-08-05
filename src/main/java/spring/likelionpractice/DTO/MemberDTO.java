@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import spring.likelionpractice.domain.Member;
 
 import java.time.LocalDate;
 
@@ -62,6 +64,8 @@ public class MemberDTO {
         private int ciga;
         @Schema(description = "타르 양", example = "4")
         private int tar;
+        @Schema(description = "유저 이미지", example = "12312435")
+        private MultipartFile image;
     }
 
     @AllArgsConstructor
@@ -85,6 +89,18 @@ public class MemberDTO {
         private int tar;
         @Schema(description = "프로필 이미지", example = "ASUADS43423")
         private String image;
+
+        public MemberUpdateResponse(Member member) {
+            name = member.getName();
+            email = member.getEmail();
+            noSmk = member.getNoSmk();
+            startSmk = member.getStartSmk();
+            amountSmk = member.getAmountSmk();
+            price = member.getPrice();
+            ciga = member.getCiga();
+            tar = member.getTar();
+            image = member.arrayToImage();
+        }
     }
 
     @Data
@@ -98,5 +114,27 @@ public class MemberDTO {
     public static class LoginResponse {
         @Schema(description = "토큰", example = "AUNKEWOCJSK53432")
         private String token;
+    }
+
+    @Data
+    public static class EmailRequest {
+        @Schema(description = "이메일 주소", example = "qwer@naver.com")
+        private String email;
+    }
+
+    @Data
+    public static class IdFindRequest {
+        @Schema(description = "이름", example = "홍길동")
+        private String name;
+        @Schema(description = "이메일 주소", example = "qwer@naver.com")
+        private String email;
+    }
+
+    @Data
+    public static class PasswordFindRequest {
+        @Schema(description = "아이디", example = "qwer1234")
+        private String userId;
+        @Schema(description = "이메일", example = "qwer@naver.com")
+        private String email;
     }
 }
