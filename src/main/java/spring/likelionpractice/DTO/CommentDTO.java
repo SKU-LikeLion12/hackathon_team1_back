@@ -53,4 +53,13 @@ public class CommentDTO {
             writer_id = comment.getWriter().getUserId();
         }
     }
+
+    @Data
+    public static class CommentCountResponse {
+        private Long commentCount;
+
+        public CommentCountResponse(Comment comment) {
+
+        }
+    }
 }

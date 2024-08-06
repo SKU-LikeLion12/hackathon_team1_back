@@ -49,4 +49,10 @@ public class JpaArticleRepository implements ArticleRepository {
         Article article = em.find(Article.class, articleId);
         article.setLikeCount(article.getLikeCount() + 1);
     }
+
+    @Override
+    public List<Long> commentCount(){
+        return em.createQuery("SELECT COUNT(c) FROM Article a LEFT JOIN Comment c ON a.id = c.article.id GROUP BY a.id", Long.class)
+                .getResultList();
+    }
 }
