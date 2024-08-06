@@ -57,6 +57,8 @@ public class ArticleDTO {
         private String title;
         @Schema(description = "내용", example = "게시물 내용입니다.")
         private String content;
+        @Schema(description = "이미지", example = "게시물 이미지입니다.")
+        private MultipartFile image;
     }
 
     @Data

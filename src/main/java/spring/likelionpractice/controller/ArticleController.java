@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import spring.likelionpractice.DTO.ArticleDTO.*;
 import spring.likelionpractice.domain.Article;
 import spring.likelionpractice.service.ArticleService;
@@ -54,9 +53,10 @@ public class ArticleController {
                 responses = {@ApiResponse(responseCode = "200", description = "게시물 수정"),
                             @ApiResponse(responseCode = "401", description = "유효하지 않은 토큰입니다.")})
     @PutMapping(value = "/article/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<ResponseArticle> updateArticle(@RequestHeader("Authorization") String BearerToken, @PathVariable("id") Long id, @RequestPart requestArticle request, @RequestPart(required = false) MultipartFile image) throws IOException {
+    public ResponseEntity<ResponseArticle> updateArticle(@RequestHeader("Authorization") String BearerToken, @PathVariable("id") Long id, requestArticle request) throws IOException {
         String token = BearerToken.replace("Bearer", "");
-        Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), token, image);
+
+        Article article = articleService.updateArticle(id, request.getTitle(), request.getContent(), token, request.getImage());
         return ResponseEntity.ok(new ResponseArticle(article));
     }
 
