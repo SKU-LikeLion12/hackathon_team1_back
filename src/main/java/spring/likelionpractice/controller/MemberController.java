@@ -122,7 +122,7 @@ public class MemberController {
     @Operation(summary = "회원 정보 수정", description = "로그인 성공 후 회원 정보 수정(이름, 금연시작일시, 흡연 시작일시, 하루 흡연량, 담배가격, 담배 한 갑당 개비수, 타르(담배), 회원 사진", tags = "member",
                 responses = {@ApiResponse(responseCode = "200", description = "수정된 정보 출력")})
     @PutMapping(value = "/member", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> changeMemberInfo(@RequestHeader("Authorization") String bearerToken, @RequestPart MemberUpdateRequest request) throws IOException {
+    public ResponseEntity<?> changeMemberInfo(@RequestHeader("Authorization") String bearerToken, MemberUpdateRequest request) throws IOException {
         String token = bearerToken.replace("Bearer", "");
         Member findMember = memberService.changeInfo(token, request.getName(), request.getEmail(), request.getNoSmk(),
                 request.getStartSmk(), request.getAmountSmk(), request.getPrice(), request.getCiga(),
