@@ -47,7 +47,7 @@ public class JpaLikeRepository implements LikeRepository {
 
     @Override
     public List<Article> findBySortLike() {         // 게시글 좋아요 개수 내림차순 정렬 조회 (좋아요 많은 거 부터)
-        return em.createQuery("Select a from Article a  Order by a.likeCount Desc", Article.class)
+        return em.createQuery("Select a from Article a Order by a.likeCount Desc", Article.class)
                 .getResultList();
     }
 }

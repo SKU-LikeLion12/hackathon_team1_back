@@ -16,4 +16,6 @@ public interface ArticleRepository {
     public List<Article> findUserAll(Long memberId);        // 멤버 아이디로 작성글 조회
 
     public void setLikeCount(Long articleId);       // 게시물 좋아요 카운트 + 1
+
+    public List<Long> commentCount();
 }

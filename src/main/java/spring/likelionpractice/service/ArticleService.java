@@ -92,4 +92,9 @@ public class ArticleService {
         Member member = memberService.findByUserId(memberId);
         return articleRepository.findUserAll(member.getId());
     }
+
+    @Transactional
+    public List<Long> commentCountArticle() {
+        return articleRepository.commentCount();
+    }
 }

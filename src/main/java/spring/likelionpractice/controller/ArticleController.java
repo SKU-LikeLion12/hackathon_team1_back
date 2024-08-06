@@ -91,4 +91,12 @@ public class ArticleController {
         }
         return responseArticles;
     }
+
+    @Operation(summary = "모든 게시물에 대한 댓글 개수 조회", description = "댓글 개수 조회", tags = "Article",
+                responses = {@ApiResponse(responseCode = "200", description = "전체 댓글 개수 조회")})
+    @GetMapping("/articles/commentCount")
+    public ResponseEntity<List<Long>> getArticleCommentCount() {
+        List<Long> commentCount = articleService.commentCountArticle();
+        return ResponseEntity.ok(commentCount);
+    }
 }
